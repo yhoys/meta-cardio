@@ -70,3 +70,38 @@ body {
     font-size: 2rem;
   }
 }
+.mode-container {
+  margin-top: 3rem;
+}
+
+.mode-cards {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.mode-card {
+  background: white;
+  padding: 2rem;
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.mode-card h3 {
+  margin-top: 0;
+  color: #1e293b;
+}
+
+.mode-card p {
+  color: #64748b;
+}

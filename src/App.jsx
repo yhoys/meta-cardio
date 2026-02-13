@@ -1,6 +1,10 @@
+import { useState } from "react";
 import "./App.css";
+import ModeSelector from "./components/ModeSelector";
 
 function App() {
+  const [mode, setMode] = useState(null);
+
   return (
     <div className="app-container">
       <header className="app-header">
@@ -10,7 +14,6 @@ function App() {
             alt="Logo Meta-Cardio"
             className="logo"
           />
-
           <div className="header-text">
             <h1>Meta Cardio</h1>
             <p className="subtitle">
@@ -21,12 +24,11 @@ function App() {
       </header>
 
       <main className="app-content">
-        <h2>Bienvenido</h2>
-        <p>
-          Esta aplicación permite calcular el riesgo de desarrollar diabetes
-          tipo 2 (FINDRISC) y el riesgo cardiovascular a 10 años (Framingham),
-          generando un documento clínico estructurado en formato FHIR.
-        </p>
+        {!mode && <ModeSelector onSelect={setMode} />}
+
+        {mode === "profesional" && <h2>Modo Profesional seleccionado</h2>}
+
+        {mode === "paciente" && <h2>Modo Paciente seleccionado</h2>}
       </main>
     </div>
   );
