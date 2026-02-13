@@ -1,33 +1,28 @@
-body {
-  margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f4f6f9;
-}
-
 .app-container {
-  text-align: center;
-}
-
-.app-header {
-  background: linear-gradient(135deg, #1e3a5f, #2563a6);
-  color: white;
-  padding: 2rem;
   width: 100%;
 }
 
+.app-header {
+  width: 100%;
+  background: linear-gradient(135deg, #1e3a5f, #2563a6);
+  color: white;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
 .logo {
-  width: 110px;
+  width: 100px;
   margin-bottom: 1rem;
 }
 
 .subtitle {
-  font-size: 0.95rem;
+  font-size: 1rem;
   opacity: 0.9;
 }
 
 .app-content {
-  padding: 2rem;
-  max-width: 800px;
+  padding: 2rem 1rem;
+  max-width: 900px;
   margin: auto;
   color: #1e293b;
 }
