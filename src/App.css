@@ -1,29 +1,77 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f4f6f9;
+}
+
+/* Contenedor general */
 .app-container {
   width: 100%;
 }
 
+/* HEADER */
 .app-header {
   width: 100%;
   background: linear-gradient(135deg, #1e3a5f, #2563a6);
   color: white;
-  padding: 3rem 1rem;
-  text-align: center;
+  padding: 2.5rem 1rem;
 }
 
+/* Contenido interno del header */
+.header-content {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Logo */
 .logo {
-  width: 12vw;
-  max-width: 180px;
-  min-width: 100px;
+  width: 220px;
+  height: auto;
+}
+
+/* Texto del header */
+.header-text h1 {
+  margin: 0;
+  font-size: 3rem;
 }
 
 .subtitle {
+  margin-top: 0.5rem;
   font-size: 1rem;
   opacity: 0.9;
 }
 
+/* Contenido principal */
 .app-content {
   padding: 2rem 1rem;
   max-width: 900px;
   margin: auto;
   color: #1e293b;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo {
+    width: 160px;
+  }
+
+  .header-text h1 {
+    font-size: 2.2rem;
+  }
 }
