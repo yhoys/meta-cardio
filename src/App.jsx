@@ -1,7 +1,8 @@
 function App() {
   return (
     <div>
-      <h1>mHealth Cardiovascular Risk App</h1>
+      <img src="/meta-cardio-logo.png" alt="Meta-Cardio Logo" width="120" />
+      <h1>Meta-Cardio</h1>
     </div>
   );
 }
