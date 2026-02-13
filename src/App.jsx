@@ -6,10 +6,10 @@ function App() {
       <header className="app-header">
         <img
           src="/meta-cardio-logo.png"
-          alt="Logo Meta-Cardio"
+          alt="Logo Meta Cardio"
           className="logo"
         />
-        <h1>Meta-Cardio</h1>
+        <h1>Meta Cardio</h1>
         <p className="subtitle">
           Evaluación de Riesgo Cardiovascular y Metabólico basada en FHIR
         </p>
