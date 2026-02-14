@@ -1,0 +1,756 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0001",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "1032456789"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10001"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Laura", "Isabel"],
+            "family": "Montoya Pérez"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1991-04-12",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 300 451 2201",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 604 444 1020",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "laura.montoya@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cra 50 #45-21, Medellín, Antioquia"
+          }
+        ],
+        "maritalStatus": {
+          "text": "S"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Andrés Montoya"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 301 880 1122"
+              },
+              {
+                "system": "email",
+                "value": "andres.montoya@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "E"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0002",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "1001987654"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10002"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Camilo", "José"],
+            "family": "Rojas Díaz"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1987-11-03",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 311 520 7731",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 601 310 2200",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "camilo.rojas@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Calle 134 #19-08, Bogotá D.C."
+          }
+        ],
+        "maritalStatus": {
+          "text": "C"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Diana Rojas"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 312 700 9911"
+              },
+              {
+                "system": "email",
+                "value": "diana.rojas@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "S"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0003",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "1122334455"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10003"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Valentina"],
+            "family": "García Ospina"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "2006-02-18",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 320 610 4402",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 605 430 7810",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "valentina.garcia@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Av 4N #22-90, Cali, Valle"
+          }
+        ],
+        "maritalStatus": {
+          "text": "S"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Marta García"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 315 900 2300"
+              },
+              {
+                "system": "email",
+                "value": "marta.garcia@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "MTH"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0004",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "990087766"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10004"
+          }
+        ],
+        "active": false,
+        "name": [
+          {
+            "given": ["Bruno", "Rafael"],
+            "family": "Silva"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1995-07-29",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 322 800 7744",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 607 680 9001",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "bruno.silva@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cl 35 #10-55, Bucaramanga, Santander"
+          }
+        ],
+        "maritalStatus": {
+          "text": "D"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Paola Silva"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 300 700 8899"
+              },
+              {
+                "system": "email",
+                "value": "paola.silva@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "S"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0005",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "5544332211"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10005"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Natalia", "Andrea"],
+            "family": "López Martínez"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1999-09-10",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 304 222 1900",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 602 520 1205",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "natalia.lopez@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cra 12 #8-33, Pasto, Nariño"
+          }
+        ],
+        "maritalStatus": {
+          "text": "U"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Sergio López"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 310 111 2233"
+              },
+              {
+                "system": "email",
+                "value": "sergio.lopez@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "BRO"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0006",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "7788990011"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10006"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Jorge", "Luis"],
+            "family": "Castaño Herrera"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1982-01-25",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 317 450 9910",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 606 890 3322",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "jorge.castano@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cra 7 #14-60, Pereira, Risaralda"
+          }
+        ],
+        "maritalStatus": {
+          "text": "M"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Lina Herrera"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 318 900 4455"
+              },
+              {
+                "system": "email",
+                "value": "lina.herrera@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "SPO"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0007",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "6677889900"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10007"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Sofía", "Camila"],
+            "family": "Méndez"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1993-12-08",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 305 390 2231",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 601 820 7711",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "sofia.mendez@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Calle 72 #5-41, Bogotá D.C."
+          }
+        ],
+        "maritalStatus": {
+          "text": "C"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Felipe Méndez"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 320 222 1111"
+              },
+              {
+                "system": "email",
+                "value": "felipe.mendez@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "PAR"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0008",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "4455667788"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10008"
+          }
+        ],
+        "active": false,
+        "name": [
+          {
+            "given": ["Esteban"],
+            "family": "Quintero Salas"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1978-05-14",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 312 610 7780",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 604 410 6620",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "esteban.quintero@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cra 80 #30-12, Medellín, Antioquia"
+          }
+        ],
+        "maritalStatus": {
+          "text": "W"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Juliana Salas"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 300 991 5500"
+              },
+              {
+                "system": "email",
+                "value": "juliana.salas@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "EMR"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0009",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "2233445566"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10009"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Daniel", "Alejandro"],
+            "family": "Suárez Nieto"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2012-10-27",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 301 777 8801",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 605 210 3300",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "daniel.suarez@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cl 18 #7-20, Barranquilla, Atlántico"
+          }
+        ],
+        "maritalStatus": {
+          "text": "S"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Carolina Nieto"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 314 333 2211"
+              },
+              {
+                "system": "email",
+                "value": "carolina.nieto@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "MTH"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-0010",
+        "identifier": [
+          {
+            "system": "https://demo.com/id-oficial",
+            "value": "8899001122"
+          },
+          {
+            "system": "https://demo.com/id-ips",
+            "value": "IPS-PT-10010"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "given": ["Paula", "Fernanda"],
+            "family": "Arias Gómez"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1989-03-31",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+57 319 880 7612",
+            "use": "mobile"
+          },
+          {
+            "system": "phone",
+            "value": "+57 602 410 9933",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "paula.arias@demo.com"
+          }
+        ],
+        "address": [
+          {
+            "text": "Cra 27 #9-14, Popayán, Cauca"
+          }
+        ],
+        "maritalStatus": {
+          "text": "M"
+        },
+        "contact": [
+          {
+            "name": {
+              "text": "Ricardo Gómez"
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "+57 311 909 8080"
+              },
+              {
+                "system": "email",
+                "value": "ricardo.gomez@demo.com"
+              }
+            ],
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "code": "SPO"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
