@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import ModeSelector from "./components/ModeSelector";
 import PatientSelector from "./components/PatientSelector";
+import FindriscForm from "./components/FindriscForm";
 
 function App() {
   const [mode, setMode] = useState(null);
@@ -47,16 +48,20 @@ function App() {
             <PatientSelector onPatientSelect={setSelectedPatient} />
 
             {selectedPatient && (
-              <div style={{ marginTop: "2rem" }}>
-                <h3>Datos del paciente</h3>
-                <p>
-                  Nombre: {selectedPatient.name[0].given.join(" ")}{" "}
-                  {selectedPatient.name[0].family}
-                </p>
-                <p>Género: {selectedPatient.gender}</p>
-                <p>Fecha de nacimiento: {selectedPatient.birthDate}</p>
-                <p>Edad: {calcularEdad(selectedPatient.birthDate)} años</p>
-              </div>
+              <>
+                <div style={{ marginTop: "2rem" }}>
+                  <h3>Datos del paciente</h3>
+                  <p>
+                    Nombre: {selectedPatient.name[0].given.join(" ")}{" "}
+                    {selectedPatient.name[0].family}
+                  </p>
+                  <p>Género: {selectedPatient.gender}</p>
+                  <p>Fecha de nacimiento: {selectedPatient.birthDate}</p>
+                  <p>Edad: {calcularEdad(selectedPatient.birthDate)} años</p>
+                </div>
+
+                <FindriscForm age={calcularEdad(selectedPatient.birthDate)} />
+              </>
             )}
           </>
         )}
