@@ -91,6 +91,8 @@ function FindriscForm({ age, gender, patientId }) {
 
   const [resultado, setResultado] = useState(null);
 
+  const [compositionJson, setCompositionJson] = useState(null);
+
   return (
     <div style={{ marginTop: "3rem" }}>
       <h2>Escala FINDRISC</h2>
@@ -244,11 +246,13 @@ function FindriscForm({ age, gender, patientId }) {
 
           const composition = buildComposition(patientId, observation);
 
-          console.log("FHIR Observation:");
+          setCompositionJson(composition);
+
+          /*console.log("FHIR Observation:");
           console.log(observation);
 
           console.log("FHIR Composition:");
-          console.log(composition);
+          console.log(composition);*/
         }}
       >
         Calcular riesgo
@@ -292,6 +296,25 @@ function FindriscForm({ age, gender, patientId }) {
               </div>
             );
           })()}
+        </div>
+      )}
+
+      {compositionJson && (
+        <div style={{ marginTop: "3rem", textAlign: "left" }}>
+          <h3>Documento Clínico FHIR (Composition)</h3>
+
+          <pre
+            style={{
+              backgroundColor: "#0f172a",
+              color: "#f1f5f9",
+              padding: "1.5rem",
+              borderRadius: "10px",
+              overflowX: "auto",
+              fontSize: "0.8rem",
+            }}
+          >
+            {JSON.stringify(compositionJson, null, 2)}
+          </pre>
         </div>
       )}
     </div>
