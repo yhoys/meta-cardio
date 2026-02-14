@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 
 function FindriscForm({ age, gender }) {
   const [formData, setFormData] = useState({
@@ -228,7 +229,21 @@ function FindriscForm({ age, gender }) {
 
       <button
         style={{ marginTop: "2rem" }}
-        onClick={() => setResultado(calcularFindrisc())}
+        onClick={() => {
+          const puntos = calcularFindrisc();
+          setResultado(puntos);
+
+          const riesgo = clasificarRiesgo(puntos);
+
+          const observation = buildFindriscObservation(
+            "pat-0001",
+            puntos,
+            riesgo.nivel,
+          );
+
+          console.log("FHIR Observation FINDRISC:");
+          console.log(observation);
+        }}
       >
         Calcular riesgo
       </button>
