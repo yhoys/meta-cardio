@@ -256,28 +256,33 @@ function FindriscForm({ age, gender, patientId }) {
       <button
         style={{ marginTop: "2rem" }}
         onClick={() => {
+          const imcValue = calcularIMC();
+
+          if (!imcValue) {
+            alert("Debe ingresar peso y talla válidos.");
+            return;
+          }
+
           const puntos = calcularFindrisc();
           setResultado(puntos);
 
           const riesgo = clasificarRiesgo(puntos);
 
-          const observation = buildFindriscObservation(
+          const imcObservation = buildIMCObservation(patientId, imcValue);
+
+          const findriscObservation = buildFindriscObservation(
             patientId,
             puntos,
             riesgo.nivel,
           );
 
-          const composition = buildComposition(patientId, observation);
-
-          setCompositionJson(composition);
-
-          const imcValue = calcularIMC();
-
-          const imcObservation = buildIMCObservation(
+          const composition = buildComposition(
             patientId,
-            imcValue,
+            findriscObservation,
             imcObservation,
           );
+
+          setCompositionJson(composition);
 
           /*console.log("FHIR Observation:");
           console.log(observation);
