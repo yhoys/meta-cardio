@@ -60,7 +60,10 @@ function App() {
                   <p>Edad: {calcularEdad(selectedPatient.birthDate)} años</p>
                 </div>
 
-                <FindriscForm age={calcularEdad(selectedPatient.birthDate)} />
+                <FindriscForm
+                  age={calcularEdad(selectedPatient.birthDate)}
+                  gender={selectedPatient.gender}
+                />
               </>
             )}
           </>
