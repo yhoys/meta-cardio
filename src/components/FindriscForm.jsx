@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 import { buildComposition } from "../fhir/buildComposition";
+import { buildIMCObservation } from "../fhir/buildIMCObservation";
 
 function FindriscForm({ age, gender, patientId }) {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ function FindriscForm({ age, gender, patientId }) {
     else puntos += 4;
 
     // IMC
-    const imc = parseFloat(formData.imc);
+    const imc = calcularIMC();
     if (!isNaN(imc)) {
       if (imc < 25) puntos += 0;
       else if (imc < 30) puntos += 1;
@@ -89,6 +90,17 @@ function FindriscForm({ age, gender, patientId }) {
     return { nivel: "Muy alto", color: "#7f1d1d" };
   };
 
+  const calcularIMC = () => {
+    const peso = parseFloat(formData.peso);
+    const talla = parseFloat(formData.talla);
+
+    if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
+      return peso / (talla * talla);
+    }
+
+    return null;
+  };
+
   const [resultado, setResultado] = useState(null);
 
   const [compositionJson, setCompositionJson] = useState(null);
@@ -100,11 +112,22 @@ function FindriscForm({ age, gender, patientId }) {
       <p>Edad: {age} años</p>
 
       <div>
-        <label>IMC:</label>
+        <label>Peso (kg):</label>
         <input
           type="number"
-          name="imc"
-          value={formData.imc}
+          name="peso"
+          value={formData.peso || ""}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <label>Talla (m)</label>
+        <input
+          type="number"
+          step="0.01"
+          name="talla"
+          value={formData.talla || ""}
           onChange={handleChange}
         />
       </div>
@@ -247,6 +270,14 @@ function FindriscForm({ age, gender, patientId }) {
           const composition = buildComposition(patientId, observation);
 
           setCompositionJson(composition);
+
+          const imcValue = calcularIMC();
+
+          const imcObservation = buildIMCObservation(
+            patientId,
+            imcValue,
+            imcObservation,
+          );
 
           /*console.log("FHIR Observation:");
           console.log(observation);

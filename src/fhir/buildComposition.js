@@ -1,4 +1,8 @@
-export function buildComposition(patientId, findriscObservation) {
+export function buildComposition(
+  patientId,
+  findriscObservation,
+  imcObservation,
+) {
   return {
     resourceType: "Composition",
     id: "meta-cardio-" + Date.now(),
@@ -30,6 +34,14 @@ export function buildComposition(patientId, findriscObservation) {
     title: "Informe de Evaluación de Riesgo Cardiovascular y Metabólico",
 
     section: [
+      {
+        title: "Indice de Masa Corporal (IMC)",
+        entry: [
+          {
+            reference: `Observation/${imcObservation.id}`,
+          },
+        ],
+      },
       {
         title: "Riesgo de Diabetes Tipo 2 (FINDRISC)",
         entry: [
