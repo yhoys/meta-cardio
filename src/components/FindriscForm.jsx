@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
+import { buildComposition } from "../fhir/buildComposition";
 
-function FindriscForm({ age, gender }) {
+function FindriscForm({ age, gender, patientId }) {
   const [formData, setFormData] = useState({
     imc: "",
     perimetro: "",
@@ -236,13 +237,18 @@ function FindriscForm({ age, gender }) {
           const riesgo = clasificarRiesgo(puntos);
 
           const observation = buildFindriscObservation(
-            "pat-0001",
+            patientId,
             puntos,
             riesgo.nivel,
           );
 
-          console.log("FHIR Observation FINDRISC:");
+          const composition = buildComposition(patientId, observation);
+
+          console.log("FHIR Observation:");
           console.log(observation);
+
+          console.log("FHIR Composition:");
+          console.log(composition);
         }}
       >
         Calcular riesgo

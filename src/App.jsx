@@ -63,6 +63,7 @@ function App() {
                 <FindriscForm
                   age={calcularEdad(selectedPatient.birthDate)}
                   gender={selectedPatient.gender}
+                  patientId={selectedPatient.id}
                 />
               </>
             )}
