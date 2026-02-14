@@ -105,3 +105,11 @@ body {
 .mode-card p {
   color: #64748b;
 }
+
+input[type="radio"] {
+  margin-right: 0.4rem;
+}
+
+label {
+  font-weight: 500;
+}

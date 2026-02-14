@@ -44,56 +44,101 @@ function FindriscForm({ age }) {
         />
       </div>
 
+      <label>Actividad física regular:</label>
       <div>
-        <label>Actividad física regular:</label>
-        <select
-          name="actividadFisica"
-          value={formData.actividadFisica}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            name="actividadFisica"
+            value="sí"
+            checked={formData.actividadFisica === "sí"}
+            onChange={handleChange}
+          />
+          Sí
+        </label>
+
+        <label style={{ marginLeft: "1rem" }}>
+          <input
+            type="radio"
+            name="actividadFisica"
+            value="no"
+            checked={formData.actividadFisica === "no"}
+            onChange={handleChange}
+          />
+          No
+        </label>
       </div>
 
+      <label>Consumo diario de frutas y verduras:</label>
       <div>
-        <label>Consumo diario de frutas/verduras:</label>
-        <select
-          name="frutasVerduras"
-          value={formData.frutasVerduras}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            name="frutasVerduras"
+            value="sí"
+            checked={formData.frutasVerduras === "sí"}
+            onChange={handleChange}
+          />
+          Sí
+        </label>
+        <label style={{ marginLeft: "1rem" }}>
+          <input
+            type="radio"
+            name="frutasVerduras"
+            value="no"
+            checked={formData.frutasVerduras === "no"}
+            onChange={handleChange}
+          />
+          No
+        </label>
       </div>
 
+      <label>Uso de antihipertensivos:</label>
       <div>
-        <label>Uso de antihipertensivos:</label>
-        <select
-          name="antihipertensivos"
-          value={formData.antihipertensivos}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            name="antihipertensivos"
+            value="sí"
+            checked={formData.antihipertensivos === "sí"}
+            onChange={handleChange}
+          />
+          Sí
+        </label>
+        <label style={{ marginLeft: "1rem" }}>
+          <input
+            type="radio"
+            name="antihipertensivos"
+            value="no"
+            checked={formData.antihipertensivos === "no"}
+            onChange={handleChange}
+          />
+          No
+        </label>
       </div>
 
+      <label>Glucosa alta en sangre:</label>
       <div>
-        <label>Historia de glucosa elevada:</label>
-        <select
-          name="glucosaAlta"
-          value={formData.glucosaAlta}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione</option>
-          <option value="si">Sí</option>
-          <option value="no">No</option>
-        </select>
+        <label>
+          <input
+            type="radio"
+            name="glucosaAlta"
+            value="sí"
+            checked={formData.glucosaAlta === "sí"}
+            onChange={handleChange}
+          />
+          Sí
+        </label>
+        <label style={{ marginLeft: "1rem" }}>
+          <input
+            type="radio"
+            name="glucosaAlta"
+            value="no"
+            checked={formData.glucosaAlta === "no"}
+            onChange={handleChange}
+          />
+          No
+        </label>
       </div>
 
       <div>
