@@ -7,6 +7,20 @@ function App() {
   const [mode, setMode] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
 
+  function calcularEdad(fechaNacimiento) {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--;
+    }
+
+    return edad;
+  }
+
   return (
     <div className="app-container">
       <header className="app-header">
@@ -41,6 +55,7 @@ function App() {
                 </p>
                 <p>Género: {selectedPatient.gender}</p>
                 <p>Fecha de nacimiento: {selectedPatient.birthDate}</p>
+                <p>Edad: {calcularEdad(selectedPatient.birthDate)} años</p>
               </div>
             )}
           </>
