@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { buildFraminghamObservation } from "../fhir/buildFraminghamObservation";
 
-function FraminghamForm({ age, gender, imc }) {
+function FraminghamForm({ age, gender, imc, patientId }) {
   const [usaLaboratorio, setUsaLaboratorio] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -61,7 +62,7 @@ function FraminghamForm({ age, gender, imc }) {
         (formData.diabetes === "si" ? 0.69154 : 0);
 
       s0 = 0.95012;
-      media = 26.1931;
+      media = 26.0145;
     }
 
     return (1 - Math.pow(s0, Math.exp(sum - media))) * 100;
@@ -248,6 +249,21 @@ function FraminghamForm({ age, gender, imc }) {
         onClick={() => {
           const r = calcularFramingham();
           if (!r) return;
+
+          const modeloUsado =
+            usaLaboratorio === "si" ? "Lipid-baed model" : "BMI-based model";
+
+          const observation = buildFraminghamObservation(
+            patientId,
+            r.original,
+            r.ajustado,
+            clasificarRiesgo.nive,
+            modeloUsado,
+          );
+
+          console.log("FHIR Framingham Observation:");
+          console.log(observation);
+
           setResultado(r);
         }}
       >

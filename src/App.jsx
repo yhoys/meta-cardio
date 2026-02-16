@@ -72,6 +72,7 @@ function App() {
                 <FraminghamForm
                   age={calcularEdad(selectedPatient.birthDate)}
                   gender={selectedPatient.gender}
+                  patientId={selectedPatient.id}
                   imc={imcGlobal}
                 />
               </>
