@@ -154,22 +154,31 @@ function App() {
                 )}
 
                 {compositionJson && (
-                  <div style={{ marginTop: "2rem" }}>
+                  <div style={{ marginTop: "2rem", textAlign: "left" }}>
                     <div
                       style={{
                         display: "flex",
-                        gap: "1rem",
-                        marginBottom: "1rem",
+                        gap: "0.5rem",
+                        alignItems: "center",
+                        marginBottom: "0.75rem",
                       }}
                     >
-                      <h3>Documento Clínico FHIR generado</h3>
+                      <h3 style={{ margin: 0 }}>Documento Clínico FHIR</h3>
                       <button
                         onClick={copyComposition}
-                        style={{ padding: "0.5rem 1rem", fontSize: "0.9rem" }}
+                        style={{
+                          padding: "0.25rem 0.6rem",
+                          fontSize: "0.75rem",
+                          borderRadius: "4px",
+                          border: "1px solid #cbd5f5",
+                          backgroundColor: "#e2e8f0",
+                          cursor: "pointer",
+                        }}
                       >
                         Copiar JSON
                       </button>
                     </div>
+
                     <pre
                       style={{
                         backgroundColor: "#0f172a",
@@ -180,6 +189,7 @@ function App() {
                         fontSize: "0.8rem",
                         maxHeight: "400px",
                         overflowY: "auto",
+                        margin: 0,
                       }}
                     >
                       {JSON.stringify(compositionJson, null, 2)}
