@@ -3,6 +3,7 @@ import "./App.css";
 import ModeSelector from "./components/ModeSelector";
 import PatientSelector from "./components/PatientSelector";
 import FindriscForm from "./components/FindriscForm";
+import FraminghamForm from "./components/FraminghamForm";
 
 function App() {
   const [mode, setMode] = useState(null);
@@ -64,6 +65,11 @@ function App() {
                   age={calcularEdad(selectedPatient.birthDate)}
                   gender={selectedPatient.gender}
                   patientId={selectedPatient.id}
+                />
+
+                <FraminghamForm
+                  age={calcularEdad(selectedPatient.birthDate)}
+                  gender={selectedPatient.gender}
                 />
               </>
             )}
