@@ -13,7 +13,7 @@ function FindriscForm({
   setWaistObs,
 }) {
   const [formData, setFormData] = useState({
-    imc: "",
+    peso: "",
     talla: "",
     perimetro: "",
     actividadFisica: "",
@@ -138,8 +138,6 @@ function FindriscForm({
       return;
     }
 
-    const perimetro = parseFloat(formData.perimetro);
-
     if (
       !formData.actividadFisica ||
       !formData.frutasVerduras ||
@@ -171,6 +169,7 @@ function FindriscForm({
       imcClasificacion.nivel,
     );
 
+    const perimetro = parseFloat(formData.perimetro);
     const waistObservation = buildWaistObservation(patientId, perimetro);
 
     setFindriscObs(findriscObservation);
@@ -182,214 +181,214 @@ function FindriscForm({
   const imcInfo = imcActual ? clasificarIMC(imcActual) : null;
 
   return (
-    <div style={{ marginTop: "3rem" }}>
+    <div className="section-card">
       <h2>Escala FINDRISC</h2>
+      <small>
+        Evaluación del riesgo de desarrollar diabetes tipo 2 en 10 años.
+      </small>
 
-      <p>Edad: {age} años</p>
+      <p style={{ marginTop: 0, marginBottom: "1rem", color: "#64748b" }}>
+        Edad: {age} años
+      </p>
 
-      <div>
-        <label>Peso (kg):</label>
-        <input
-          type="number"
-          name="peso"
-          value={formData.peso || ""}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label>Talla (cm)</label>
-        <input
-          type="number"
-          name="talla"
-          value={formData.talla || ""}
-          onChange={handleChange}
-        />
-      </div>
-
-      <div>
-        <label>Perímetro abdominal (cm):</label>
-        <input
-          type="number"
-          name="perimetro"
-          value={formData.perimetro || ""}
-          onChange={handleChange}
-        />
-      </div>
-
-      <label>Actividad física regular:</label>
-      <div>
-        <label>
+      <div className="form-grid">
+        <div className="form-field">
+          <label>Peso (kg):</label>
           <input
-            type="radio"
-            name="actividadFisica"
-            value="sí"
-            checked={formData.actividadFisica === "sí"}
+            type="number"
+            name="peso"
+            value={formData.peso || ""}
             onChange={handleChange}
           />
-          Sí
-        </label>
+        </div>
 
-        <label style={{ marginLeft: "1rem" }}>
+        <div className="form-field">
+          <label>Talla (cm)</label>
           <input
-            type="radio"
-            name="actividadFisica"
-            value="no"
-            checked={formData.actividadFisica === "no"}
+            type="number"
+            name="talla"
+            value={formData.talla || ""}
             onChange={handleChange}
           />
-          No
-        </label>
-      </div>
+        </div>
 
-      <label>Consumo diario de frutas y verduras:</label>
-      <div>
-        <label>
+        <div className="form-field">
+          <label>Perímetro abdominal (cm):</label>
           <input
-            type="radio"
-            name="frutasVerduras"
-            value="sí"
-            checked={formData.frutasVerduras === "sí"}
+            type="number"
+            name="perimetro"
+            value={formData.perimetro || ""}
             onChange={handleChange}
           />
-          Sí
-        </label>
-        <label style={{ marginLeft: "1rem" }}>
-          <input
-            type="radio"
-            name="frutasVerduras"
-            value="no"
-            checked={formData.frutasVerduras === "no"}
-            onChange={handleChange}
-          />
-          No
-        </label>
-      </div>
+        </div>
 
-      <label>Uso de antihipertensivos:</label>
-      <div>
-        <label>
-          <input
-            type="radio"
-            name="antihipertensivos"
-            value="sí"
-            checked={formData.antihipertensivos === "sí"}
-            onChange={handleChange}
-          />
-          Sí
-        </label>
-        <label style={{ marginLeft: "1rem" }}>
-          <input
-            type="radio"
-            name="antihipertensivos"
-            value="no"
-            checked={formData.antihipertensivos === "no"}
-            onChange={handleChange}
-          />
-          No
-        </label>
-      </div>
+        <div className="form-field">
+          <label>Actividad física regular:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="actividadFisica"
+                value="sí"
+                checked={formData.actividadFisica === "sí"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
 
-      <label>Glucosa alta en sangre:</label>
-      <div>
-        <label>
-          <input
-            type="radio"
-            name="glucosaAlta"
-            value="sí"
-            checked={formData.glucosaAlta === "sí"}
-            onChange={handleChange}
-          />
-          Sí
-        </label>
-        <label style={{ marginLeft: "1rem" }}>
-          <input
-            type="radio"
-            name="glucosaAlta"
-            value="no"
-            checked={formData.glucosaAlta === "no"}
-            onChange={handleChange}
-          />
-          No
-        </label>
-      </div>
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="actividadFisica"
+                value="no"
+                checked={formData.actividadFisica === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
+          </div>
+        </div>
 
-      <div>
-        <label>Antecedentes familiares de diabetes:</label>
-        <select
-          name="antecedentes"
-          value={formData.antecedentes}
-          onChange={handleChange}
-        >
-          <option value="">Seleccione</option>
-          <option value="ninguno">Ninguno</option>
-          <option value="segundoGrado">Segundo grado</option>
-          <option value="primerGrado">Primer grado</option>
-        </select>
+        <div className="form-field">
+          <label>Consumo diario de frutas y verduras:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="frutasVerduras"
+                value="sí"
+                checked={formData.frutasVerduras === "sí"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="frutasVerduras"
+                value="no"
+                checked={formData.frutasVerduras === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
+          </div>
+        </div>
+
+        <div className="form-field">
+          <label>Uso de antihipertensivos:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="antihipertensivos"
+                value="sí"
+                checked={formData.antihipertensivos === "sí"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="antihipertensivos"
+                value="no"
+                checked={formData.antihipertensivos === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
+          </div>
+        </div>
+
+        <div className="form-field">
+          <label>Glucosa alta en sangre:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="glucosaAlta"
+                value="sí"
+                checked={formData.glucosaAlta === "sí"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="glucosaAlta"
+                value="no"
+                checked={formData.glucosaAlta === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
+          </div>
+        </div>
+
+        <div className="form-field">
+          <label>Antecedentes familiares de diabetes:</label>
+          <select
+            name="antecedentes"
+            value={formData.antecedentes}
+            onChange={handleChange}
+          >
+            <option value="">Seleccione</option>
+            <option value="ninguno">Ninguno</option>
+            <option value="segundoGrado">Segundo grado</option>
+            <option value="primerGrado">Primer grado</option>
+          </select>
+        </div>
       </div>
 
       {imcActual && imcInfo && (
-        <div style={{ marginTop: "1rem" }}>
-          <div
-            style={{
-              padding: "0.8rem",
-              borderRadius: "8px",
-              backgroundColor: "#f8fafc",
-              borderLeft: `5px solid ${imcInfo.color}`,
-            }}
-          >
-            <strong>IMC:</strong> {imcActual.toFixed(2)} kg/m² <br />
-            <strong>Clasificación:</strong>{" "}
-            <span style={{ color: imcInfo.color }}>{imcInfo.nivel}</span>
-          </div>
+        <div className="result-card" style={{ borderLeftColor: imcInfo.color }}>
+          <strong>IMC:</strong> {imcActual.toFixed(2)} kg/m²
+          <br />
+          <strong>Clasificación:</strong>{" "}
+          <span style={{ color: imcInfo.color }}>{imcInfo.nivel}</span>
         </div>
       )}
 
-      <button style={{ marginTop: "2rem" }} onClick={handleCalcular}>
-        Calcular riesgo
+      <button className="primary-button" onClick={handleCalcular}>
+        Calcular riesgo FINDRISC
       </button>
 
-      {resultado !== null && (
-        <div style={{ marginTop: "2rem" }}>
-          <h3>Puntaje FINDRISC: {resultado}</h3>
+      {resultado !== null &&
+        (() => {
+          const riesgo = clasificarRiesgo(resultado);
 
-          {(() => {
-            const riesgo = clasificarRiesgo(resultado);
+          return (
+            <div
+              className="result-card"
+              style={{ borderLeftColor: riesgo.color }}
+            >
+              <h4 style={{ color: riesgo.color }}>Riesgo: {riesgo.nivel}</h4>
+              <p>
+                {riesgo.nivel === "Bajo" &&
+                  "Riesgo reducido de desarrollar diabetes tipo 2 en los próximos 10 años."}
 
-            return (
-              <div
-                style={{
-                  marginTop: "1rem",
-                  padding: "1rem",
-                  borderRadius: "8px",
-                  backgroundColor: "#f8fafc",
-                  borderLeft: `6px solid ${riesgo.color}`,
-                }}
-              >
-                <h4 style={{ color: riesgo.color }}>Riesgo: {riesgo.nivel}</h4>
-                <p>
-                  {riesgo.nivel === "Bajo" &&
-                    "Riesgo reducido de desarrollar diabetes tipo 2 en los próximos 10 años."}
+                {riesgo.nivel === "Ligeramente elevado" &&
+                  "Existe un riesgo leve. Se recomienda mantener hábitos saludables."}
 
-                  {riesgo.nivel === "Ligeramente elevado" &&
-                    "Existe un riesgo leve. Se recomienda mantener hábitos saludables."}
+                {riesgo.nivel === "Moderado" &&
+                  "Riesgo intermedio. Se recomienda evaluación médica y cambios en estilo de vida."}
 
-                  {riesgo.nivel === "Moderado" &&
-                    "Riesgo intermedio. Se recomienda evaluación médica y cambios en estilo de vida."}
+                {riesgo.nivel === "Alto" &&
+                  "Alto riesgo. Se recomienda evaluación clínica y control metabólico."}
 
-                  {riesgo.nivel === "Alto" &&
-                    "Alto riesgo. Se recomienda evaluación clínica y control metabólico."}
-
-                  {riesgo.nivel === "Muy alto" &&
-                    "Riesgo muy elevado. Se recomienda intervención médica inmediata."}
-                </p>
-                <strong>Riesgo estimado a 10 años:</strong>{" "}
-                {riesgo.riesgoEstimado}
-              </div>
-            );
-          })()}
-        </div>
-      )}
+                {riesgo.nivel === "Muy alto" &&
+                  "Riesgo muy elevado. Se recomienda intervención médica inmediata."}
+              </p>
+              <strong>Riesgo estimado a 10 años:</strong>{" "}
+              {riesgo.riesgoEstimado}
+            </div>
+          );
+        })()}
     </div>
   );
 }

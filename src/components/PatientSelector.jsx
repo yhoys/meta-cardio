@@ -12,31 +12,46 @@ function PatientSelector({ onPatientSelect }) {
   };
 
   if (!patients.length) {
-    return <p>No se encontraron pacientes activos.</p>;
+    return (
+      <div className="section-card">
+        <h2>Seleccionar paciente</h2>
+        <p style={{ color: "#64748b" }}>
+          No se encontraron pacientes activos en el Bundle.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="section-card">
       <h2>Seleccionar paciente</h2>
+      <small>
+        Elija un paciente activo del Bundle para calcular el riesgo
+        cardiovascular y metabólico.
+      </small>
 
-      <select onChange={handleChange} defaultValue="">
-        <option value="" disabled>
-          -- Seleccione un paciente --
-        </option>
+      <div className="form-field" style={{ maxWidth: "100%" }}>
+        <label htmlFor="patient-select">Paciente</label>
+        <select id="patient-select" onChange={handleChange} defaultValue="">
+          <option value="" disabled>
+            -- Seleccione un paciente --
+          </option>
 
-        {patients.map((patient) => {
-          const name = patient.name?.[0];
-          const given = name?.given?.join(" ") || "";
-          const family = name?.family || "";
-          const label = `${given} ${family}`.trim() || `Paciente ${patient.id}`;
+          {patients.map((patient) => {
+            const name = patient.name?.[0];
+            const given = name?.given?.join(" ") || "";
+            const family = name?.family || "";
+            const label =
+              `${given} ${family}`.trim() || `Paciente ${patient.id}`;
 
-          return (
-            <option key={patient.id} value={patient.id}>
-              {label}
-            </option>
-          );
-        })}
-      </select>
+            return (
+              <option key={patient.id} value={patient.id}>
+                {label}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </div>
   );
 }

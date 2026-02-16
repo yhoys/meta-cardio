@@ -51,10 +51,143 @@ body {
   max-width: 900px;
   margin: auto;
   color: #1e293b;
+}
+
+/* Pantalla inicial */
+.mode-container {
+  margin-top: 3rem;
   text-align: center;
 }
 
+/* Tarjetas de Sección */
+.section-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+  text-align: left;
+}
+
+.section-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+  color: #0f172a;
+}
+
+.section-card small {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: #64748b;
+}
+
+/* Layout de formulario en dos columnas */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+}
+
 /* Responsive */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fila de campo */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-field label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin-bottom: 0.2rem;
+}
+
+.form-field input[type="number"],
+.form-field select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5f5;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.form-field input[type="number"]:focus,
+.form-field select:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.2);
+}
+
+/* Radio groups */
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+/* Botón principal */
+.primary-button {
+  margin-top: 1.75rem;
+  padding: 0.75rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  background-color: #0f766e;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(15, 118, 110, 0.3);
+}
+
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.primary-button:hover:not(:disabled) {
+  background-color: #0e635e;
+}
+
+/* Tarjetas de resultado */
+.result-card {
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  border-left: 6px solid #0f766e;
+}
+
+.result-card h4 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+/* Ajustes generales de inputs y labels */
+input[type="radio"] {
+  margin-right: 0.4rem;
+}
+
+label {
+  font-weight: 500;
+}
+
+/* Responsive header */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -70,11 +203,7 @@ body {
   }
 }
 
-.mode-container {
-  margin-top: 3rem;
-  text-align: center;
-}
-
+/* Tarjetas de modo (si las sigues usando) */
 .mode-cards {
   display: flex;
   gap: 2rem;
@@ -113,12 +242,4 @@ body {
 
 .mode-card p {
   color: #64748b;
-}
-
-input[type="radio"] {
-  margin-right: 0.4rem;
-}
-
-label {
-  font-weight: 500;
 }

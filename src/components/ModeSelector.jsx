@@ -10,18 +10,8 @@ function ModeSelector({ onStart }) {
       <button
         type="button"
         onClick={onStart}
-        style={{
-          marginTop: "2rem",
-          padding: "0.9rem 2.2rem",
-          borderRadius: "999px",
-          border: "none",
-          backgroundColor: "#0f766e",
-          color: "white",
-          fontSize: "1rem",
-          fontWeight: 600,
-          cursor: "pointer",
-          boxShadow: "0 10px 25px rgba(15,118,110,0.3)",
-        }}
+        className="primary-button"
+        style={{ marginTop: "2rem" }}
       >
         Iniciar Evaluación
       </button>

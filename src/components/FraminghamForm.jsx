@@ -214,13 +214,17 @@ function FraminghamForm({ age, gender, imc, patientId, setFraminghamObs }) {
   };
 
   return (
-    <div style={{ marginTop: "3rem" }}>
+    <div className="section-card">
       <h2>Riesgo Cardiovascular a 10 años (Framingham)</h2>
+      <small>
+        Estimación del riesgo de infarto y ACV en 10 años (ajustado para
+        población colombiana).
+      </small>
 
-      <div>
+      <div className="form-field">
         <label>¿Dispone de resultados de colesterol total y HDL?</label>
-        <div>
-          <label>
+        <div className="radio-group">
+          <label className="radio-option">
             <input
               type="radio"
               value="si"
@@ -230,7 +234,7 @@ function FraminghamForm({ age, gender, imc, patientId, setFraminghamObs }) {
             Sí
           </label>
 
-          <label style={{ marginLeft: "1rem" }}>
+          <label className="radio-option">
             <input
               type="radio"
               value="no"
@@ -242,136 +246,149 @@ function FraminghamForm({ age, gender, imc, patientId, setFraminghamObs }) {
         </div>
       </div>
 
-      {usaLaboratorio === "si" && (
-        <>
-          <div>
-            <label>Colesterol total (mg/dL):</label>
-            <input
-              type="number"
-              name="colesterolTotal"
-              value={formData.colesterolTotal || ""}
-              onChange={handleChange}
-            />
+      <div className="form-grid">
+        {usaLaboratorio === "si" && (
+          <>
+            <div className="form-field">
+              <label>Colesterol total (mg/dL):</label>
+              <input
+                type="number"
+                name="colesterolTotal"
+                value={formData.colesterolTotal || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>HDL (mg/dL):</label>
+              <input
+                type="number"
+                name="hdl"
+                value={formData.hdl || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </>
+        )}
+
+        <div className="form-field">
+          <label>Presión arterial sistólica (mmHg):</label>
+          <input
+            type="number"
+            name="pas"
+            value={formData.pas || ""}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-field">
+          <label>Tratamiento antihipertensivo:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="tratamiento"
+                value="si"
+                checked={formData.tratamiento === "si"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="tratamiento"
+                value="no"
+                checked={formData.tratamiento === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
           </div>
+        </div>
 
-          <div>
-            <label>HDL (mg/dL):</label>
-            <input
-              type="number"
-              name="hdl"
-              value={formData.hdl || ""}
-              onChange={handleChange}
-            />
+        <div className="form-field">
+          <label>Fumador:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="fumador"
+                value="si"
+                checked={formData.fumador === "si"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="fumador"
+                value="no"
+                checked={formData.fumador === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
           </div>
-        </>
-      )}
+        </div>
 
-      <div>
-        <label>Presión arterial sistólica (mmHg):</label>
-        <input
-          type="number"
-          name="pas"
-          value={formData.pas || ""}
-          onChange={handleChange}
-        />
+        <div className="form-field">
+          <label>Diabetes conocida:</label>
+          <div className="radio-group">
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="diabetes"
+                value="si"
+                checked={formData.diabetes === "si"}
+                onChange={handleChange}
+              />
+              Sí
+            </label>
+
+            <label className="radio-option">
+              <input
+                type="radio"
+                name="diabetes"
+                value="no"
+                checked={formData.diabetes === "no"}
+                onChange={handleChange}
+              />
+              No
+            </label>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <label>Tratamiento antihipertensivo:</label>
-        <input
-          type="radio"
-          name="tratamiento"
-          value="si"
-          checked={formData.tratamiento === "si"}
-          onChange={handleChange}
-        />{" "}
-        Sí
-        <input
-          type="radio"
-          name="tratamiento"
-          value="no"
-          checked={formData.tratamiento === "no"}
-          onChange={handleChange}
-          style={{ marginLeft: "1rem" }}
-        />{" "}
-        No
-      </div>
-
-      <div>
-        <label>Fumador:</label>
-        <input
-          type="radio"
-          name="fumador"
-          value="si"
-          checked={formData.fumador === "si"}
-          onChange={handleChange}
-        />{" "}
-        Sí
-        <input
-          type="radio"
-          name="fumador"
-          value="no"
-          checked={formData.fumador === "no"}
-          onChange={handleChange}
-          style={{ marginLeft: "1rem" }}
-        />{" "}
-        No
-      </div>
-
-      <div>
-        <label>Diabetes:</label>
-        <input
-          type="radio"
-          name="diabetes"
-          value="si"
-          checked={formData.diabetes === "si"}
-          onChange={handleChange}
-        />{" "}
-        Sí
-        <input
-          type="radio"
-          name="diabetes"
-          value="no"
-          checked={formData.diabetes === "no"}
-          onChange={handleChange}
-          style={{ marginLeft: "1rem" }}
-        />{" "}
-        No
-      </div>
-
-      <button style={{ marginTop: "2rem" }} onClick={handleCalcular}>
+      <button className="primary-button" onClick={handleCalcular}>
         Calcular riesgo cardiovascular
       </button>
 
-      {resultado && (
-        <div style={{ marginTop: "1.5rem" }}>
-          {(() => {
-            const clasificacion = clasificarRiesgo(resultado.ajustado);
+      {resultado &&
+        (() => {
+          const clasificacion = clasificarRiesgo(resultado.ajustado);
 
-            return (
-              <div
-                style={{
-                  padding: "1rem",
-                  borderLeft: `6px solid ${clasificacion.color}`,
-                  backgroundColor: "#f8fafc",
-                  borderRadius: "8px",
-                }}
-              >
-                <p>
-                  <strong>Modelo original:</strong> {resultado.original}%
-                </p>
-                <p>
-                  <strong>Riesgo ajustado (Colombia):</strong>{" "}
-                  {resultado.ajustado}%
-                </p>
-                <h4 style={{ color: clasificacion.color }}>
-                  Clasificación (ajustado): {clasificacion.nivel}
-                </h4>
-              </div>
-            );
-          })()}
-        </div>
-      )}
+          return (
+            <div
+              className="result-card"
+              style={{ borderLeftColor: clasificacion.color }}
+            >
+              <p>
+                <strong>Modelo original:</strong> {resultado.original}%
+              </p>
+              <p>
+                <strong>Riesgo ajustado (Colombia):</strong>{" "}
+                {resultado.ajustado}%
+              </p>
+              <h4 style={{ color: clasificacion.color }}>
+                Clasificación (ajustado): {clasificacion.nivel}
+              </h4>
+            </div>
+          );
+        })()}
     </div>
   );
 }

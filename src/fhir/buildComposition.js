@@ -51,6 +51,10 @@ export function buildComposition(
     section: [
       {
         title: "Índice de Masa Corporal (IMC)",
+        text: {
+          status: "generated",
+          div: "<div>Índice de masa corporal calculado a partir de peso y talla, clasificado según rangos de IMC.</div>",
+        },
         entry: [
           {
             reference: `Observation/${imcObservation.id}`,
@@ -59,6 +63,10 @@ export function buildComposition(
       },
       {
         title: "Riesgo de Diabetes Tipo 2 (FINDRISC)",
+        text: {
+          status: "generated",
+          div: "<div>Puntaje total de FINDRISC y categoría de riesgo estimado a 10 años para diabetes tipo 2.</div>",
+        },
         entry: [
           {
             reference: `Observation/${findriscObservation.id}`,
@@ -67,6 +75,10 @@ export function buildComposition(
       },
       {
         title: "Riesgo Cardiovascular a 10 años (Framingham Colombia)",
+        text: {
+          status: "generated",
+          div: "<div>Riesgo cardiovascular a 10 años según modelo de Framingham, con riesgo original y riesgo ajustado (factor 0.75 recomendado para Colombia).</div>",
+        },
         entry: [
           {
             reference: `Observation/${framinghamObservation.id}`,
@@ -75,6 +87,10 @@ export function buildComposition(
       },
       {
         title: "Perímetro Abdominal",
+        text: {
+          status: "generated",
+          div: "<div>Perímetro abdominal medido en centímetros, utilizado como indicador de riesgo cardiometabólico.</div>",
+        },
         entry: [
           {
             reference: `Observation/${waistObservation.id}`,
