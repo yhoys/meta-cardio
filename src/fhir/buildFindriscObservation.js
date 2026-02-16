@@ -1,4 +1,9 @@
-export function buildFindriscObservation(patientId, score, classification) {
+export function buildFindriscObservation(
+  patientId,
+  score,
+  classification,
+  riskPercentage,
+) {
   return {
     resourceType: "Observation",
     id: "findrisc-" + Date.now(),
@@ -20,12 +25,12 @@ export function buildFindriscObservation(patientId, score, classification) {
     code: {
       coding: [
         {
-          system: "http://snomed.info/sct",
-          code: "44054006",
-          display: "Diabetes mellitus type 2 risk",
+          system: "http://loinc.org",
+          code: "97064-0",
+          display: "Total risk score FINDRISC",
         },
       ],
-      text: "FINDRISC Score",
+      text: "Puntaje total FINDRISC",
     },
 
     subject: {
@@ -45,8 +50,20 @@ export function buildFindriscObservation(patientId, score, classification) {
       },
     ],
 
+    component: [
+      {
+        code: {
+          text: "Estimated 10-year risk",
+        },
+        valueQuantity: {
+          value: parseInt(riskPercentage),
+          unit: "%",
+        },
+      },
+    ],
+
     method: {
-      text: "FINDRISC questionnaire",
+      text: "FINDRISC questionnaire (Lindström & Tuomilehto, 2003)",
     },
   };
 }

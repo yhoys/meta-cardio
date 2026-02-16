@@ -76,18 +76,22 @@ function FindriscForm({ age, gender, patientId }) {
 
   const clasificarRiesgo = (puntos) => {
     if (puntos < 7) {
-      return { nivel: "Bajo", color: "#16a34a" };
+      return { nivel: "Bajo", riesgoEstimado: "1%", color: "#16a34a" };
     }
     if (puntos <= 11) {
-      return { nivel: "Ligeramente elevado", color: "#eab308" };
+      return {
+        nivel: "Ligeramente elevado",
+        riesgoEstimado: "4%",
+        color: "#eab308",
+      };
     }
     if (puntos <= 14) {
-      return { nivel: "Moderado", color: "#f97316" };
+      return { nivel: "Moderado", riesgoEstimado: "17%", color: "#f97316" };
     }
     if (puntos <= 20) {
-      return { nivel: "Alto", color: "#dc2626" };
+      return { nivel: "Alto", riesgoEstimado: "33%", color: "#dc2626" };
     }
-    return { nivel: "Muy alto", color: "#7f1d1d" };
+    return { nivel: "Muy alto", riesgoEstimado: "50%", color: "#7f1d1d" };
   };
 
   const calcularIMC = () => {
@@ -307,18 +311,19 @@ function FindriscForm({ age, gender, patientId }) {
 
           const riesgo = clasificarRiesgo(puntos);
 
+          const findriscObservation = buildFindriscObservation(
+            patientId,
+            puntos,
+            riesgo.nivel,
+            riesgo.riesgoEstimado,
+          );
+
           const imcClasificacion = clasificarIMC(imcValue);
 
           const imcObservation = buildIMCObservation(
             patientId,
             imcValue,
             imcClasificacion.nivel,
-          );
-
-          const findriscObservation = buildFindriscObservation(
-            patientId,
-            puntos,
-            riesgo.nivel,
           );
 
           const composition = buildComposition(
@@ -357,7 +362,6 @@ function FindriscForm({ age, gender, patientId }) {
                 }}
               >
                 <h4 style={{ color: riesgo.color }}>Riesgo: {riesgo.nivel}</h4>
-
                 <p>
                   {riesgo.nivel === "Bajo" &&
                     "Riesgo reducido de desarrollar diabetes tipo 2 en los próximos 10 años."}
@@ -374,6 +378,8 @@ function FindriscForm({ age, gender, patientId }) {
                   {riesgo.nivel === "Muy alto" &&
                     "Riesgo muy elevado. Se recomienda intervención médica inmediata."}
                 </p>
+                <strong>Riesgo estimado a 10 años:</strong>{" "}
+                {riesgo.riesgoEstimado}
               </div>
             );
           })()}
