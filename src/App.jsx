@@ -122,6 +122,7 @@ function App() {
                   setImcGlobal={setImcGlobal}
                   setImcObs={setImcObs}
                   setFindriscObs={setFindriscObs}
+                  setWaistObs={setWaistObs}
                 />
 
                 <FraminghamForm
