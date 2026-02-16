@@ -3,7 +3,7 @@ import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 import { buildComposition } from "../fhir/buildComposition";
 import { buildIMCObservation } from "../fhir/buildIMCObservation";
 
-function FindriscForm({ age, gender, patientId }) {
+function FindriscForm({ age, gender, patientId, setImcGlobal }) {
   const [formData, setFormData] = useState({
     imc: "",
     perimetro: "",
@@ -300,6 +300,7 @@ function FindriscForm({ age, gender, patientId }) {
         style={{ marginTop: "2rem" }}
         onClick={() => {
           const imcValue = calcularIMC();
+          setImcGlobal(imcValue);
 
           if (!imcValue) {
             alert("Debe ingresar peso y talla válidos.");

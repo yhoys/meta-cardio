@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function FraminghamForm({ age, gender, calcularIMC }) {
+function FraminghamForm({ age, gender, imc }) {
   const [usaLaboratorio, setUsaLaboratorio] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -69,10 +69,10 @@ function FraminghamForm({ age, gender, calcularIMC }) {
 
   // Modelo basado en IMC
   const calcularModeloIMC = () => {
-    const imc = calcularIMC();
+    const imcValue = imc;
     const pas = parseFloat(formData.pas);
 
-    if (!imc || !pas) return null;
+    if (!imcValue || !pas) return null;
 
     const lnEdad = Math.log(age);
     const lnIMC = Math.log(imc);

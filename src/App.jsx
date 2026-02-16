@@ -8,6 +8,7 @@ import FraminghamForm from "./components/FraminghamForm";
 function App() {
   const [mode, setMode] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [imcGlobal, setImcGlobal] = useState(null);
 
   function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
@@ -65,11 +66,13 @@ function App() {
                   age={calcularEdad(selectedPatient.birthDate)}
                   gender={selectedPatient.gender}
                   patientId={selectedPatient.id}
+                  setImcGlobal={setImcGlobal}
                 />
 
                 <FraminghamForm
                   age={calcularEdad(selectedPatient.birthDate)}
                   gender={selectedPatient.gender}
+                  imc={imcGlobal}
                 />
               </>
             )}
