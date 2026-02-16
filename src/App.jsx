@@ -16,6 +16,7 @@ function App() {
   const [compositionJson, setCompositionJson] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [waistObs, setWaistObs] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const patientAge = useMemo(() => {
     if (!selectedPatient?.birthDate) return null;
@@ -75,6 +76,8 @@ function App() {
   const copyComposition = () => {
     if (compositionJson) {
       navigator.clipboard.writeText(JSON.stringify(compositionJson, null, 2));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     }
   };
 
@@ -135,6 +138,7 @@ function App() {
 
                 {allObservationsReady ? (
                   <button
+                    className="primary-button"
                     style={{ marginTop: "2rem" }}
                     onClick={handleGenerateComposition}
                     disabled={isGenerating}
@@ -172,15 +176,29 @@ function App() {
                       <button
                         onClick={copyComposition}
                         style={{
-                          padding: "0.25rem 0.6rem",
-                          fontSize: "0.75rem",
-                          borderRadius: "4px",
+                          padding: "0.35rem 0.8rem",
+                          fontSize: "0.8rem",
+                          borderRadius: "999px",
                           border: "1px solid #cbd5f5",
-                          backgroundColor: "#e2e8f0",
+                          backgroundColor: copied ? "#dcfce7" : "#e2e8f0",
+                          color: copied ? "#166534" : "#0f172a",
                           cursor: "pointer",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "0.35rem",
                         }}
                       >
-                        Copiar JSON
+                        {copied ? (
+                          <>
+                            <span style={{ fontSize: "0.9rem" }}>✔</span>
+                            <span>Copiado</span>
+                          </>
+                        ) : (
+                          <>
+                            <span style={{ fontSize: "0.9rem" }}>📄📄</span>
+                            <span>Copiar JSON</span>
+                          </>
+                        )}
                       </button>
                     </div>
 
