@@ -7,7 +7,7 @@ import FraminghamForm from "./components/FraminghamForm";
 import { buildComposition } from "./fhir/buildComposition";
 
 function App() {
-  const [mode, setMode] = useState(null);
+  const [started, setStarted] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [imcGlobal, setImcGlobal] = useState(null);
   const [imcObs, setImcObs] = useState(null);
@@ -97,9 +97,9 @@ function App() {
       </header>
 
       <main className="app-content">
-        {!mode && <ModeSelector onSelect={setMode} />}
+        {!started && <ModeSelector onStart={() => setStarted(true)} />}
 
-        {mode === "profesional" && (
+        {started && (
           <>
             <PatientSelector onPatientSelect={handlePatientSelect} />
 
@@ -205,8 +205,6 @@ function App() {
             )}
           </>
         )}
-
-        {mode === "paciente" && <h2>Modo Paciente seleccionado</h2>}
       </main>
     </div>
   );
