@@ -69,13 +69,10 @@ body {
     font-size: 2rem;
   }
 }
+
 .mode-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  flex-wrap: wrap;
   margin-top: 3rem;
+  text-align: center;
 }
 
 .mode-cards {
@@ -99,8 +96,8 @@ body {
 }
 
 .mode-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
 
