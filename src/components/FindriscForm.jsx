@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 import { buildIMCObservation } from "../fhir/buildIMCObservation";
+import { buildWaistObservation } from "../fhir/buildWaistObservation";
 
 function FindriscForm({
   age,
@@ -9,6 +10,7 @@ function FindriscForm({
   setImcGlobal,
   setImcObs,
   setFindriscObs,
+  setWaistObs,
 }) {
   const [formData, setFormData] = useState({
     imc: "",
@@ -136,6 +138,8 @@ function FindriscForm({
       return;
     }
 
+    const perimetro = parseFloat(formData.perimetro);
+
     if (
       !formData.actividadFisica ||
       !formData.frutasVerduras ||
@@ -167,8 +171,11 @@ function FindriscForm({
       imcClasificacion.nivel,
     );
 
+    const waistObservation = buildWaistObservation(patientId, perimetro);
+
     setFindriscObs(findriscObservation);
     setImcObs(imcObservation);
+    setWaistObs(waistObservation);
   };
 
   const imcActual = calcularIMC();

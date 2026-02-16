@@ -15,6 +15,7 @@ function App() {
   const [framinghamObs, setFraminghamObs] = useState(null);
   const [compositionJson, setCompositionJson] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [waistObs, setWaistObs] = useState(null);
 
   const patientAge = useMemo(() => {
     if (!selectedPatient?.birthDate) return null;
@@ -33,8 +34,9 @@ function App() {
       !!imcObs?.id &&
       !!findriscObs?.id &&
       !!framinghamObs?.id &&
+      !!waistObs?.id &&
       patientAge !== null,
-    [imcObs, findriscObs, framinghamObs, patientAge],
+    [imcObs, findriscObs, framinghamObs, waistObs, patientAge],
   );
 
   useEffect(() => {
@@ -44,6 +46,7 @@ function App() {
       setImcObs(null);
       setFindriscObs(null);
       setFraminghamObs(null);
+      setWaistObs(null);
     }
   }, [selectedPatient]);
 
@@ -61,6 +64,7 @@ function App() {
         findriscObs,
         imcObs,
         framinghamObs,
+        waistObs,
       );
       setCompositionJson(composition);
     } finally {

@@ -3,6 +3,7 @@ export function buildComposition(
   findriscObservation,
   imcObservation,
   framinghamObservation,
+  waistObservation,
 ) {
   return {
     resourceType: "Composition",
@@ -69,6 +70,14 @@ export function buildComposition(
         entry: [
           {
             reference: `Observation/${framinghamObservation.id}`,
+          },
+        ],
+      },
+      {
+        title: "Perímetro Abdominal",
+        entry: [
+          {
+            reference: `Observation/${waistObservation.id}`,
           },
         ],
       },
