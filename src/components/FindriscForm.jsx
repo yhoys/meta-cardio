@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
-import { buildComposition } from "../fhir/buildComposition";
 import { buildIMCObservation } from "../fhir/buildIMCObservation";
 
-function FindriscForm({ age, gender, patientId, setImcGlobal }) {
+function FindriscForm({
+  age,
+  gender,
+  patientId,
+  setImcGlobal,
+  setImcObs,
+  setFindriscObs,
+}) {
   const [formData, setFormData] = useState({
     imc: "",
+    talla: "",
     perimetro: "",
     actividadFisica: "",
     frutasVerduras: "",
@@ -14,11 +21,37 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
     antecedentes: "",
   });
 
+  const [resultado, setResultado] = useState(null);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const calcularIMC = () => {
+    const peso = parseFloat(formData.peso);
+    const tallaCm = parseFloat(formData.talla);
+
+    if (!isNaN(peso) && !isNaN(tallaCm) && tallaCm > 0) {
+      const tallaM = tallaCm / 100; // Convertir cm a metros
+      return peso / (tallaM * tallaM);
+    }
+    return null;
+  };
+
+  const clasificarIMC = (imc) => {
+    if (imc < 18.5) {
+      return { nivel: "Bajo peso", color: "#3b82f6" };
+    }
+    if (imc < 25) {
+      return { nivel: "Normal", color: "#16a34a" };
+    }
+    if (imc < 30) {
+      return { nivel: "Sobrepeso", color: "#f97316" };
+    }
+    return { nivel: "Obesidad", color: "#dc2626" };
   };
 
   const calcularFindrisc = () => {
@@ -40,15 +73,12 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
 
     // Perímetro
     const perimetro = parseFloat(formData.perimetro);
-
     if (!isNaN(perimetro)) {
       if (gender === "male") {
         if (perimetro < 94) puntos += 0;
         else if (perimetro <= 102) puntos += 3;
         else puntos += 4;
-      }
-
-      if (gender === "female") {
+      } else if (gender === "female") {
         if (perimetro < 80) puntos += 0;
         else if (perimetro <= 88) puntos += 3;
         else puntos += 4;
@@ -94,33 +124,55 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
     return { nivel: "Muy alto", riesgoEstimado: "50%", color: "#7f1d1d" };
   };
 
-  const calcularIMC = () => {
-    const peso = parseFloat(formData.peso);
-    const talla = parseFloat(formData.talla);
-
-    if (!isNaN(peso) && !isNaN(talla) && talla > 0) {
-      return peso / (talla * talla);
+  const handleCalcular = () => {
+    const imcValue = calcularIMC();
+    if (!imcValue) {
+      alert("Debe ingresar peso y talla válidos.");
+      return;
     }
 
-    return null;
+    if (!formData.perimetro) {
+      alert("Debe ingresar un perímetro abdominal.");
+      return;
+    }
+
+    if (
+      !formData.actividadFisica ||
+      !formData.frutasVerduras ||
+      !formData.antihipertensivos ||
+      !formData.glucosaAlta ||
+      !formData.antecedentes
+    ) {
+      alert("Complete todas las preguntas del FINDRISC.");
+      return;
+    }
+
+    setImcGlobal(imcValue);
+
+    const puntos = calcularFindrisc();
+    setResultado(puntos);
+
+    const riesgo = clasificarRiesgo(puntos);
+    const findriscObservation = buildFindriscObservation(
+      patientId,
+      puntos,
+      riesgo.nivel,
+      riesgo.riesgoEstimado,
+    );
+
+    const imcClasificacion = clasificarIMC(imcValue);
+    const imcObservation = buildIMCObservation(
+      patientId,
+      imcValue,
+      imcClasificacion.nivel,
+    );
+
+    setFindriscObs(findriscObservation);
+    setImcObs(imcObservation);
   };
 
-  const clasificarIMC = (imc) => {
-    if (imc < 18.5) {
-      return { nivel: "Bajo peso", color: "#3b82f6" };
-    }
-    if (imc < 25) {
-      return { nivel: "Normal", color: "#16a34a" };
-    }
-    if (imc < 30) {
-      return { nivel: "Sobrepeso", color: "#f97316" };
-    }
-    return { nivel: "Obesidad", color: "#dc2626" };
-  };
-
-  const [resultado, setResultado] = useState(null);
-
-  const [compositionJson, setCompositionJson] = useState(null);
+  const imcActual = calcularIMC();
+  const imcInfo = imcActual ? clasificarIMC(imcActual) : null;
 
   return (
     <div style={{ marginTop: "3rem" }}>
@@ -139,10 +191,9 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
       </div>
 
       <div>
-        <label>Talla (m)</label>
+        <label>Talla (cm)</label>
         <input
           type="number"
-          step="0.01"
           name="talla"
           value={formData.talla || ""}
           onChange={handleChange}
@@ -154,7 +205,7 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
         <input
           type="number"
           name="perimetro"
-          value={formData.perimetro}
+          value={formData.perimetro || ""}
           onChange={handleChange}
         />
       </div>
@@ -270,78 +321,24 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
         </select>
       </div>
 
-      {calcularIMC() && (
+      {imcActual && imcInfo && (
         <div style={{ marginTop: "1rem" }}>
-          {(() => {
-            const imc = calcularIMC();
-            const clasificacion = clasificarIMC(imc);
-
-            return (
-              <div
-                style={{
-                  padding: "0.8rem",
-                  borderRadius: "8px",
-                  backgroundColor: "#f8fafc",
-                  borderLeft: `5px solid ${clasificacion.color}`,
-                }}
-              >
-                <strong>IMC:</strong> {imc.toFixed(2)} kg/m² <br />
-                <strong>Clasificación:</strong>{" "}
-                <span style={{ color: clasificacion.color }}>
-                  {clasificacion.nivel}
-                </span>
-              </div>
-            );
-          })()}
+          <div
+            style={{
+              padding: "0.8rem",
+              borderRadius: "8px",
+              backgroundColor: "#f8fafc",
+              borderLeft: `5px solid ${imcInfo.color}`,
+            }}
+          >
+            <strong>IMC:</strong> {imcActual.toFixed(2)} kg/m² <br />
+            <strong>Clasificación:</strong>{" "}
+            <span style={{ color: imcInfo.color }}>{imcInfo.nivel}</span>
+          </div>
         </div>
       )}
 
-      <button
-        style={{ marginTop: "2rem" }}
-        onClick={() => {
-          const imcValue = calcularIMC();
-          setImcGlobal(imcValue);
-
-          if (!imcValue) {
-            alert("Debe ingresar peso y talla válidos.");
-            return;
-          }
-
-          const puntos = calcularFindrisc();
-          setResultado(puntos);
-
-          const riesgo = clasificarRiesgo(puntos);
-
-          const findriscObservation = buildFindriscObservation(
-            patientId,
-            puntos,
-            riesgo.nivel,
-            riesgo.riesgoEstimado,
-          );
-
-          const imcClasificacion = clasificarIMC(imcValue);
-
-          const imcObservation = buildIMCObservation(
-            patientId,
-            imcValue,
-            imcClasificacion.nivel,
-          );
-
-          const composition = buildComposition(
-            patientId,
-            findriscObservation,
-            imcObservation,
-          );
-
-          setCompositionJson(composition);
-
-          /*console.log("FHIR Observation:");
-          console.log(observation);
-
-          console.log("FHIR Composition:");
-          console.log(composition);*/
-        }}
-      >
+      <button style={{ marginTop: "2rem" }} onClick={handleCalcular}>
         Calcular riesgo
       </button>
 
@@ -384,25 +381,6 @@ function FindriscForm({ age, gender, patientId, setImcGlobal }) {
               </div>
             );
           })()}
-        </div>
-      )}
-
-      {compositionJson && (
-        <div style={{ marginTop: "3rem", textAlign: "left" }}>
-          <h3>Documento Clínico FHIR (Composition)</h3>
-
-          <pre
-            style={{
-              backgroundColor: "#0f172a",
-              color: "#f1f5f9",
-              padding: "1.5rem",
-              borderRadius: "10px",
-              overflowX: "auto",
-              fontSize: "0.8rem",
-            }}
-          >
-            {JSON.stringify(compositionJson, null, 2)}
-          </pre>
         </div>
       )}
     </div>

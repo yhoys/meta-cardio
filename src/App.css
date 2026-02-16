@@ -4,7 +4,6 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
   background-color: #f4f6f9;
 }
 
@@ -95,6 +94,11 @@ body {
 .mode-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.mode-card:focus {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
 }
 
 .mode-card h3 {

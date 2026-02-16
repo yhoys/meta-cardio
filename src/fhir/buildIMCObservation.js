@@ -1,7 +1,7 @@
 export function buildIMCObservation(patientId, imcValue, classification) {
   return {
     resourceType: "Observation",
-    id: "imc-" + Date.now(),
+    id: `imc-${Date.now()}`,
     status: "final",
 
     category: [
@@ -37,6 +37,8 @@ export function buildIMCObservation(patientId, imcValue, classification) {
     valueQuantity: {
       value: parseFloat(imcValue.toFixed(2)),
       unit: "kg/m2",
+      system: "http://unitsofmeasure.org",
+      code: "kg/m2",
     },
 
     interpretation: [

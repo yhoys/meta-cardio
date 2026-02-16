@@ -4,9 +4,14 @@ export function buildFindriscObservation(
   classification,
   riskPercentage,
 ) {
+  const riskValue =
+    typeof riskPercentage === "string"
+      ? parseFloat(riskPercentage.replace("%", ""))
+      : riskPercentage;
+
   return {
     resourceType: "Observation",
-    id: "findrisc-" + Date.now(),
+    id: `findrisc-${Date.now()}`,
     status: "final",
 
     category: [
@@ -56,8 +61,10 @@ export function buildFindriscObservation(
           text: "Estimated 10-year risk",
         },
         valueQuantity: {
-          value: parseInt(riskPercentage),
+          value: riskValue,
           unit: "%",
+          system: "http://unitsofmeasure.org",
+          code: "%",
         },
       },
     ],

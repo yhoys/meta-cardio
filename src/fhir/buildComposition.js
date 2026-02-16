@@ -2,18 +2,31 @@ export function buildComposition(
   patientId,
   findriscObservation,
   imcObservation,
+  framinghamObservation,
 ) {
   return {
     resourceType: "Composition",
-    id: "meta-cardio-" + Date.now(),
+    id: `meta-cardio-${Date.now()}`,
     status: "final",
+
+    category: [
+      {
+        coding: [
+          {
+            system: "http://loinc.org",
+            code: "LP183761-8",
+            display: "Report",
+          },
+        ],
+      },
+    ],
 
     type: {
       coding: [
         {
           system: "http://loinc.org",
-          code: "34117-2",
-          display: "Cardiovascular assessment report",
+          code: "83539-7",
+          display: "Cardiology Risk assessment and screening note",
         },
       ],
       text: "Evaluación de Riesgo Cardiovascular y Metabólico",
@@ -27,6 +40,7 @@ export function buildComposition(
 
     author: [
       {
+        reference: "Device/meta-cardio-app",
         display: "Meta Cardio App",
       },
     ],
@@ -35,7 +49,7 @@ export function buildComposition(
 
     section: [
       {
-        title: "Indice de Masa Corporal (IMC)",
+        title: "Índice de Masa Corporal (IMC)",
         entry: [
           {
             reference: `Observation/${imcObservation.id}`,
@@ -47,6 +61,14 @@ export function buildComposition(
         entry: [
           {
             reference: `Observation/${findriscObservation.id}`,
+          },
+        ],
+      },
+      {
+        title: "Riesgo Cardiovascular a 10 años (Framingham Colombia)",
+        entry: [
+          {
+            reference: `Observation/${framinghamObservation.id}`,
           },
         ],
       },

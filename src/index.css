@@ -4,6 +4,20 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    Arial,
+    Helvetica,
+    sans-serif;
   background-color: #f4f6f9;
+  color: #0f172a;
 }
