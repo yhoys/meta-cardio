@@ -101,6 +101,19 @@ function FindriscForm({ age, gender, patientId }) {
     return null;
   };
 
+  const clasificarIMC = (imc) => {
+    if (imc < 18.5) {
+      return { nivel: "Bajo peso", color: "#3b82f6" };
+    }
+    if (imc < 25) {
+      return { nivel: "Normal", color: "#16a34a" };
+    }
+    if (imc < 30) {
+      return { nivel: "Sobrepeso", color: "#f97316" };
+    }
+    return { nivel: "Obesidad", color: "#dc2626" };
+  };
+
   const [resultado, setResultado] = useState(null);
 
   const [compositionJson, setCompositionJson] = useState(null);
@@ -253,6 +266,32 @@ function FindriscForm({ age, gender, patientId }) {
         </select>
       </div>
 
+      {calcularIMC() && (
+        <div style={{ marginTop: "1rem" }}>
+          {(() => {
+            const imc = calcularIMC();
+            const clasificacion = clasificarIMC(imc);
+
+            return (
+              <div
+                style={{
+                  padding: "0.8rem",
+                  borderRadius: "8px",
+                  backgroundColor: "#f8fafc",
+                  borderLeft: `5px solid ${clasificacion.color}`,
+                }}
+              >
+                <strong>IMC:</strong> {imc.toFixed(2)} kg/m² <br />
+                <strong>Clasificación:</strong>{" "}
+                <span style={{ color: clasificacion.color }}>
+                  {clasificacion.nivel}
+                </span>
+              </div>
+            );
+          })()}
+        </div>
+      )}
+
       <button
         style={{ marginTop: "2rem" }}
         onClick={() => {
@@ -268,7 +307,13 @@ function FindriscForm({ age, gender, patientId }) {
 
           const riesgo = clasificarRiesgo(puntos);
 
-          const imcObservation = buildIMCObservation(patientId, imcValue);
+          const imcClasificacion = clasificarIMC(imcValue);
+
+          const imcObservation = buildIMCObservation(
+            patientId,
+            imcValue,
+            imcClasificacion.nivel,
+          );
 
           const findriscObservation = buildFindriscObservation(
             patientId,

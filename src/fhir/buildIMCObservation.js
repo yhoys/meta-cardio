@@ -1,4 +1,4 @@
-export function buildIMCObservation(patientId, imcValue) {
+export function buildIMCObservation(patientId, imcValue, classification) {
   return {
     resourceType: "Observation",
     id: "imc-" + Date.now(),
@@ -38,5 +38,11 @@ export function buildIMCObservation(patientId, imcValue) {
       value: parseFloat(imcValue.toFixed(2)),
       unit: "kg/m2",
     },
+
+    interpretation: [
+      {
+        text: classification,
+      },
+    ],
   };
 }
