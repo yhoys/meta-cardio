@@ -30,9 +30,9 @@ function App() {
 
   const allObservationsReady = useMemo(
     () =>
-      imcObs?.valueQuantity &&
-      findriscObs?.valueInteger &&
-      framinghamObs?.valueDecimal &&
+      !!imcObs?.id &&
+      !!findriscObs?.id &&
+      !!framinghamObs?.id &&
       patientAge !== null,
     [imcObs, findriscObs, framinghamObs, patientAge],
   );
