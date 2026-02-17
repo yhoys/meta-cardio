@@ -214,7 +214,7 @@ function App() {
                     className="step-button"
                     onClick={handleResetAll}
                   >
-                    <FaFileAlt size={14} />
+                    <FaArrowsRotate size={14} />
                     <span>Nuevo</span>
                   </button>
                 </div>
