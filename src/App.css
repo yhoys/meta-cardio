@@ -8,6 +8,7 @@ body {
 }
 
 /* HEADER limpio */
+
 .app-header {
   width: 100%;
   background-color: white;
@@ -16,6 +17,7 @@ body {
 }
 
 /* Contenido del header */
+
 .header-content {
   max-width: 1100px;
   margin: auto;
@@ -27,12 +29,14 @@ body {
 }
 
 /* Logo */
+
 .logo {
   width: 260px;
   height: auto;
 }
 
 /* Texto */
+
 .header-text h1 {
   margin: 0;
   font-size: 2.8rem;
@@ -46,6 +50,7 @@ body {
 }
 
 /* Contenido principal */
+
 .app-content {
   padding: 3rem 1rem;
   max-width: 900px;
@@ -54,12 +59,14 @@ body {
 }
 
 /* Pantalla inicial */
+
 .mode-container {
   margin-top: 3rem;
   text-align: center;
 }
 
-/* Tarjetas de Sección */
+/* Tarjetas de sección */
+
 .section-card {
   background-color: #ffffff;
   border-radius: 12px;
@@ -83,20 +90,15 @@ body {
 }
 
 /* Layout de formulario en dos columnas */
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem 1.5rem;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* Fila de campo */
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -127,6 +129,7 @@ body {
 }
 
 /* Radio groups */
+
 .radio-group {
   display: flex;
   gap: 1.5rem;
@@ -142,6 +145,7 @@ body {
 }
 
 /* Botón principal */
+
 .primary-button {
   margin-top: 1.75rem;
   padding: 0.75rem 1.8rem;
@@ -165,6 +169,7 @@ body {
 }
 
 /* Tarjetas de resultado */
+
 .result-card {
   margin-top: 1.5rem;
   padding: 1rem 1.2rem;
@@ -179,6 +184,7 @@ body {
 }
 
 /* Ajustes generales de inputs y labels */
+
 input[type="radio"] {
   margin-right: 0.4rem;
 }
@@ -188,6 +194,7 @@ label {
 }
 
 /* Responsive header */
+
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -201,9 +208,12 @@ label {
   .header-text h1 {
     font-size: 2rem;
   }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Tarjetas de modo (si las sigues usando) */
 .mode-cards {
   display: flex;
   gap: 2rem;
@@ -242,4 +252,117 @@ label {
 
 .mode-card p {
   color: #64748b;
+}
+
+/* Navegación pasos */
+
+.step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.step-separator {
+  margin: 0 0.25rem;
+  color: #cbd5f5;
+}
+
+.step-button {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #64748b;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.step-button.completed {
+  background-color: #e0f2fe;
+  color: #0f172a;
+}
+
+.step-button.active {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.step-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Alertas y JSON */
+
+.alert-warning {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #fef3c7;
+  border-radius: 8px;
+  color: #92400e;
+}
+
+.fhir-json-container {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.copy-button {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5f5;
+  background-color: #e2e8f0;
+  color: #0f172a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.copy-button.copied {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.fhir-json-pre {
+  background-color: #0f172a;
+  color: #f1f5f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  overflow-y: auto;
+  font-size: 0.8rem;
+  max-height: 400px;
+  margin: 0;
+}
+
+/* Tablas referencias */
+
+.refs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.refs-table th,
+.refs-table td {
+  border: 1px solid #e2e8f0;
+  padding: 0.4rem;
+  text-align: left;
+}
+
+.refs-table thead {
+  background-color: #f8fafc;
+}
+
+.refs-row-high {
+  background-color: #fef2f2;
+}
+
+.refs-row-very-high {
+  background-color: #fee2e2;
 }
