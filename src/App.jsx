@@ -9,6 +9,7 @@ import {
   FaUser,
   FaHeartbeat,
   FaNotesMedical,
+  FaFileAlt,
   FaArrowsRotate,
   FaBook,
 } from "react-icons/fa";
