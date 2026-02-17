@@ -86,6 +86,21 @@ function App() {
     }
   };
 
+  // Nuevo: resetear TODO (como refrescar la página)
+  const handleResetAll = () => {
+    setStarted(false);
+    setSelectedPatient(null);
+    setImcGlobal(null);
+    setImcObs(null);
+    setFindriscObs(null);
+    setFraminghamObs(null);
+    setWaistObs(null);
+    setCompositionJson(null);
+    setIsGenerating(false);
+    setCopied(false);
+    setActiveStep("paciente");
+  };
+
   const steps = [
     { id: "paciente", label: "Paciente" },
     { id: "findrisc", label: "FINDRISC" },
@@ -132,44 +147,63 @@ function App() {
 
             {selectedPatient && patientAge && (
               <>
-                {/* Barra de pasos */}
-                <nav className="step-nav">
-                  {steps.map((step, index) => {
-                    const completed =
-                      (step.id === "paciente" && selectedPatient) ||
-                      (step.id === "findrisc" && findriscObs) ||
-                      (step.id === "framingham" && framinghamObs) ||
-                      (step.id === "reporte" && compositionJson) ||
-                      (step.id === "referencias" && compositionJson);
+                {/* Barra de pasos + botón Nuevo cálculo */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "1.5rem",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <nav className="step-nav" style={{ flex: 1 }}>
+                    {steps.map((step, index) => {
+                      const completed =
+                        (step.id === "paciente" && selectedPatient) ||
+                        (step.id === "findrisc" && findriscObs) ||
+                        (step.id === "framingham" && framinghamObs) ||
+                        (step.id === "reporte" && compositionJson) ||
+                        (step.id === "referencias" && compositionJson);
 
-                    const enabled = isStepEnabled(step.id);
+                      const enabled = isStepEnabled(step.id);
 
-                    const classes = [
-                      "step-button",
-                      activeStep === step.id && "active",
-                      completed && "completed",
-                      !enabled && "disabled",
-                    ]
-                      .filter(Boolean)
-                      .join(" ");
+                      const classes = [
+                        "step-button",
+                        activeStep === step.id && "active",
+                        completed && "completed",
+                        !enabled && "disabled",
+                      ]
+                        .filter(Boolean)
+                        .join(" ");
 
-                    return (
-                      <div
-                        key={step.id}
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
-                        {index > 0 && <span className="step-separator">›</span>}
-                        <button
-                          type="button"
-                          className={classes}
-                          onClick={() => enabled && setActiveStep(step.id)}
+                      return (
+                        <div
+                          key={step.id}
+                          style={{ display: "flex", alignItems: "center" }}
                         >
-                          {step.label}
-                        </button>
-                      </div>
-                    );
-                  })}
-                </nav>
+                          {index > 0 && (
+                            <span className="step-separator">›</span>
+                          )}
+                          <button
+                            type="button"
+                            className={classes}
+                            onClick={() => enabled && setActiveStep(step.id)}
+                          >
+                            {step.label}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </nav>
+
+                  <button
+                    type="button"
+                    className="step-button"
+                    onClick={handleResetAll}
+                  >
+                    Nuevo cálculo
+                  </button>
+                </div>
 
                 {/* 1. Paciente */}
                 {activeStep === "paciente" && (
@@ -184,29 +218,38 @@ function App() {
                   </div>
                 )}
 
-                {/* 2. FINDRISC */}
-                {activeStep === "findrisc" && (
-                  <FindriscForm
-                    age={patientAge}
-                    gender={selectedPatient.gender}
-                    patientId={selectedPatient.id}
-                    setImcGlobal={setImcGlobal}
-                    setImcObs={setImcObs}
-                    setFindriscObs={setFindriscObs}
-                    setWaistObs={setWaistObs}
-                  />
-                )}
+                {/* Formularios SIEMPRE montados, solo ocultos por pestaña */}
+                <div style={{ marginTop: "2rem" }}>
+                  <div
+                    style={{
+                      display: activeStep === "findrisc" ? "block" : "none",
+                    }}
+                  >
+                    <FindriscForm
+                      age={patientAge}
+                      gender={selectedPatient.gender}
+                      patientId={selectedPatient.id}
+                      setImcGlobal={setImcGlobal}
+                      setImcObs={setImcObs}
+                      setFindriscObs={setFindriscObs}
+                      setWaistObs={setWaistObs}
+                    />
+                  </div>
 
-                {/* 3. Framingham */}
-                {activeStep === "framingham" && (
-                  <FraminghamForm
-                    age={patientAge}
-                    gender={selectedPatient.gender}
-                    patientId={selectedPatient.id}
-                    imc={imcGlobal}
-                    setFraminghamObs={setFraminghamObs}
-                  />
-                )}
+                  <div
+                    style={{
+                      display: activeStep === "framingham" ? "block" : "none",
+                    }}
+                  >
+                    <FraminghamForm
+                      age={patientAge}
+                      gender={selectedPatient.gender}
+                      patientId={selectedPatient.id}
+                      imc={imcGlobal}
+                      setFraminghamObs={setFraminghamObs}
+                    />
+                  </div>
+                </div>
 
                 {/* 4. Documento FHIR */}
                 {activeStep === "reporte" && (
@@ -302,12 +345,12 @@ function App() {
                           </td>
                         </tr>
                         <tr>
-                          <td>7–11</td>
+                          <td>7-11</td>
                           <td>4 % (Ligero)</td>
                           <td>Consejería breve. Reevaluar en 3 años.</td>
                         </tr>
                         <tr>
-                          <td>12–14</td>
+                          <td>12-14</td>
                           <td>17 % (Moderado)</td>
                           <td>
                             Intervención en estilo de vida. Tamizaje de
@@ -315,7 +358,7 @@ function App() {
                           </td>
                         </tr>
                         <tr className="refs-row-high">
-                          <td>15–20</td>
+                          <td>15-20</td>
                           <td>33 % (Alto)</td>
                           <td>Derivación médica. PTOG o HbA1c.</td>
                         </tr>
@@ -342,10 +385,10 @@ function App() {
                         <tr>
                           <td>&lt; 10 %</td>
                           <td>Bajo</td>
-                          <td>Reforzar hábitos. Reevaluar en 2–5 años.</td>
+                          <td>Reforzar hábitos. Reevaluar en 2-5 años.</td>
                         </tr>
                         <tr>
-                          <td>10–20 %</td>
+                          <td>10-20 %</td>
                           <td>Intermedio</td>
                           <td>Monitoreo frecuente. Considerar estatinas.</td>
                         </tr>
