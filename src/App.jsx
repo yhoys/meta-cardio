@@ -9,7 +9,7 @@ import {
   FaUser,
   FaHeartbeat,
   FaNotesMedical,
-  FaFileAlt,
+  FaArrowsRotate,
   FaBook,
 } from "react-icons/fa";
 import { FaRegCopy, FaCheck } from "react-icons/fa6";
@@ -214,8 +214,7 @@ function App() {
                     className="step-button"
                     onClick={handleResetAll}
                   >
-                    <FaFileAlt size={14} />
-                    <span>Nuevo</span>
+                    <FaArrowsRotate size={14} />
                   </button>
                 </div>
 
