@@ -135,18 +135,11 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <div className="header-content">
-          <img
-            src="/meta-cardio-logo.svg"
-            alt="Logo Meta-Cardio"
-            className="logo"
-          />
-          <div className="header-text">
-            <h1>Meta Cardio</h1>
-            <p className="subtitle">
-              Evaluación de Riesgo Cardiovascular y Metabólico basada en FHIR
-            </p>
-          </div>
+        <div className="logo-block">
+          <img src="/meta-cardio-logo.svg" alt="MetaCardio" className="logo" />
+          <p className="subtitle under-logo">
+            Evaluación de riesgo cardiovascular y metábolico basada en FHIR
+          </p>
         </div>
       </header>
 
