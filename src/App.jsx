@@ -5,6 +5,14 @@ import PatientSelector from "./components/PatientSelector";
 import FindriscForm from "./components/FindriscForm";
 import FraminghamForm from "./components/FraminghamForm";
 import { buildComposition } from "./fhir/buildComposition";
+import {
+  FaUser,
+  FaHeartbeat,
+  FaNotesMedical,
+  FaFileAlt,
+  FaBook,
+} from "react-icons/fa";
+import { FaRegCopy, FaCheck } from "react-icons/fa6";
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -102,11 +110,15 @@ function App() {
   };
 
   const steps = [
-    { id: "paciente", label: "Paciente" },
-    { id: "findrisc", label: "FINDRISC" },
-    { id: "framingham", label: "Framingham" },
-    { id: "reporte", label: "Documento FHIR" },
-    { id: "referencias", label: "Referencias" },
+    { id: "paciente", label: "Paciente", icon: <FaUser size={14} /> },
+    { id: "findrisc", label: "FINDRISC", icon: <FaHeartbeat size={14} /> },
+    {
+      id: "framingham",
+      label: "Framingham",
+      icon: <FaNotesMedical size={14} />,
+    },
+    { id: "reporte", label: "Documento FHIR", icon: <FaFileAlt size={14} /> },
+    { id: "referencias", label: "Referencias", icon: <FaBook size={14} /> },
   ];
 
   const isStepEnabled = (id) => {
@@ -189,7 +201,8 @@ function App() {
                             className={classes}
                             onClick={() => enabled && setActiveStep(step.id)}
                           >
-                            {step.label}
+                            {step.icon}
+                            <span>{step.label}</span>
                           </button>
                         </div>
                       );
@@ -201,7 +214,8 @@ function App() {
                     className="step-button"
                     onClick={handleResetAll}
                   >
-                    Nuevo cálculo
+                    <FaFileAlt size={14} />
+                    <span>Nuevo cálculo</span>
                   </button>
                 </div>
 
@@ -292,12 +306,12 @@ function App() {
                           >
                             {copied ? (
                               <>
-                                <span style={{ fontSize: "0.9rem" }}>✔</span>
+                                <FaCheck size={12} />
                                 <span>Copiado</span>
                               </>
                             ) : (
                               <>
-                                <span style={{ fontSize: "0.9rem" }}>📄📄</span>
+                                <FaRegCopy size={12} />
                                 <span>Copiar JSON</span>
                               </>
                             )}
