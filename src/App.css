@@ -46,6 +46,15 @@ body {
   color: #e5f4ff;
 }
 
+.logo-wrapper {
+  background-color: #ffffff;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px; /* pastilla redonda */
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+  display: flex;
+  align-items: center;
+}
+
 .subtitle {
   margin-top: 0.2rem;
   font-size: 0.9rem;
