@@ -10,10 +10,9 @@ import {
   FaHeartbeat,
   FaNotesMedical,
   FaFileAlt,
-  FaArrowsRotate,
   FaBook,
 } from "react-icons/fa";
-import { FaRegCopy, FaCheck } from "react-icons/fa6";
+import { FaRegCopy, FaCheck, FaArrowsRotate } from "react-icons/fa6";
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -216,7 +215,6 @@ function App() {
                     onClick={handleResetAll}
                   >
                     <FaArrowsRotate size={14} />
-                    <span>Nuevo</span>
                   </button>
                 </div>
 
