@@ -215,7 +215,7 @@ function App() {
                     onClick={handleResetAll}
                   >
                     <FaFileAlt size={14} />
-                    <span>Nuevo cálculo</span>
+                    <span>Nuevo</span>
                   </button>
                 </div>
 
