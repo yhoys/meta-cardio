@@ -135,11 +135,25 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <div className="logo-block">
-          <img src="/meta-cardio-logo.svg" alt="MetaCardio" className="logo" />
-          <p className="subtitle under-logo">
-            Evaluación de riesgo cardiovascular y metábolico basada en FHIR
-          </p>
+        <div className="header-content">
+          <div className="header-left">
+            <img
+              src="/meta-cardio-logo.png"
+              alt="MetaCardio"
+              className="logo"
+            />
+            <div className="header-text">
+              <p className="app-title">MetaCardio</p>
+              <p className="subtitle">
+                Evaluación de riesgo cardiovascular y metabólico basada en FHIR
+              </p>
+            </div>
+          </div>
+          <div className="header-right">
+            <span className="header-chip">
+              Proyecto Integrador · mHealth · FHIR R4
+            </span>
+          </div>
         </div>
       </header>
 

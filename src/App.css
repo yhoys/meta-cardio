@@ -7,54 +7,52 @@ body {
   background-color: #f4f6f9;
 }
 
-/* HEADER limpio */
-
+/* HEADER barra superior */
 .app-header {
   width: 100%;
-  background-color: white;
-  padding: 1.5rem 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  background-color: #0f172a;
+  padding: 0.9rem 1rem;
+  border-bottom: 3px solid #0f766e;
 }
 
 /* Contenido del header */
-
 .header-content {
   max-width: 1100px;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* Lado izquierdo: logo + textos */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
 }
 
 /* Logo */
-
-.logo-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .logo {
-  width: 200px;
+  width: 170px;
   height: auto;
 }
 
-/* Texto */
-
-.subtitle.under-logo {
-  margin-top: 0.3rem;
-  font-size: 0.95rem;
-  color: #475569;
+/* Texto debajo/del lado del logo */
+.app-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e5f4ff;
 }
 
 .subtitle {
-  margin-top: 0.25rem;
-  font-size: 0.95rem;
-  color: #475569;
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  color: #cbd5f5;
 }
 
 /* Contenido principal */
-
 .app-content {
   padding: 3rem 1rem;
   max-width: 900px;
@@ -63,14 +61,12 @@ body {
 }
 
 /* Pantalla inicial */
-
 .mode-container {
   margin-top: 3rem;
   text-align: center;
 }
 
 /* Tarjetas de sección */
-
 .section-card {
   background-color: #ffffff;
   border-radius: 12px;
@@ -94,7 +90,6 @@ body {
 }
 
 /* Layout de formulario en dos columnas */
-
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -102,7 +97,6 @@ body {
 }
 
 /* Fila de campo */
-
 .form-field {
   display: flex;
   flex-direction: column;
@@ -133,7 +127,6 @@ body {
 }
 
 /* Radio groups */
-
 .radio-group {
   display: flex;
   gap: 1.5rem;
@@ -149,7 +142,6 @@ body {
 }
 
 /* Botón principal */
-
 .primary-button {
   margin-top: 1.75rem;
   padding: 0.75rem 1.8rem;
@@ -173,7 +165,6 @@ body {
 }
 
 /* Tarjetas de resultado */
-
 .result-card {
   margin-top: 1.5rem;
   padding: 1rem 1.2rem;
@@ -188,7 +179,6 @@ body {
 }
 
 /* Ajustes generales de inputs y labels */
-
 input[type="radio"] {
   margin-right: 0.4rem;
 }
@@ -197,20 +187,15 @@ label {
   font-weight: 500;
 }
 
-/* Responsive header */
-
+/* Responsive */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
-    text-align: center;
+    align-items: flex-start;
   }
 
   .logo {
-    width: 170px;
-  }
-
-  .header-text h1 {
-    font-size: 1.8rem;
+    width: 150px;
   }
 
   .form-grid {
@@ -218,6 +203,7 @@ label {
   }
 }
 
+/* Tarjetas de modo (si las usas) */
 .mode-cards {
   display: flex;
   gap: 2rem;
@@ -241,7 +227,6 @@ label {
 .mode-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
 }
 
 .mode-card:focus {
@@ -259,7 +244,6 @@ label {
 }
 
 /* Navegación pasos */
-
 .step-nav {
   display: flex;
   flex-wrap: wrap;
@@ -303,7 +287,6 @@ label {
 }
 
 /* Alertas y JSON */
-
 .alert-warning {
   margin-top: 2rem;
   padding: 1rem;
@@ -348,7 +331,6 @@ label {
 }
 
 /* Tablas referencias */
-
 .refs-table {
   width: 100%;
   border-collapse: collapse;
