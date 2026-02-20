@@ -62,6 +62,20 @@ function App() {
     }
   }, [selectedPatient]);
 
+  useEffect(() => {
+    if (compositionJson) {
+      setCompositionJson(null);
+      setCopied(false);
+    }
+  }, [
+    imcObs,
+    findriscObs,
+    framinghamObs,
+    waistObs,
+    imcGlobal,
+    compositionJson,
+  ]);
+
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
     setActiveStep("paciente");
