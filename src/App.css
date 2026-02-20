@@ -452,5 +452,8 @@ label {
   padding: 0rem 1.2rem 0rem 1.2rem;
   max-height: 420px;
   overflow: auto;
-  background: #020617;
+}
+
+.modal-json-wrapper {
+  padding: 0.6rem 1.2rem 1.6rem 1.2rem;
 }
