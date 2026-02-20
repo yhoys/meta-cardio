@@ -25,6 +25,7 @@ function App() {
   const [compositionJson, setCompositionJson] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isCompositionStale, setIsCompositionStale] = useState(false);
 
   const [activeStep, setActiveStep] = useState("paciente");
 
@@ -64,8 +65,7 @@ function App() {
 
   useEffect(() => {
     if (compositionJson) {
-      setCompositionJson(null);
-      setCopied(false);
+      setIsCompositionStale(true);
     }
   }, [
     imcObs,
@@ -94,6 +94,7 @@ function App() {
         waistObs,
       );
       setCompositionJson(composition);
+      setIsCompositionStale(false);
       setActiveStep("reporte");
     } finally {
       setIsGenerating(false);
@@ -108,7 +109,7 @@ function App() {
     }
   };
 
-  // Nuevo: resetear TODO (como refrescar la página)
+  // Resetear todo el estado para iniciar un nuevo cálculo
   const handleResetAll = () => {
     setStarted(false);
     setSelectedPatient(null);
@@ -285,17 +286,20 @@ function App() {
                 {/* 4. Documento FHIR */}
                 {activeStep === "reporte" && (
                   <>
-                    {allObservationsReady && !compositionJson && (
-                      <button
-                        className="primary-button"
-                        onClick={handleGenerateComposition}
-                        disabled={isGenerating}
-                      >
-                        {isGenerating
-                          ? "Generando documento FHIR..."
-                          : "Generar documento clínico (FHIR Composition)"}
-                      </button>
-                    )}
+                    {allObservationsReady &&
+                      (!compositionJson || isCompositionStale) && (
+                        <button
+                          className="primary-button"
+                          onClick={handleGenerateComposition}
+                          disabled={isGenerating}
+                        >
+                          {isGenerating
+                            ? "Generando documento FHIR..."
+                            : isCompositionStale
+                              ? "Regenear documento clínico (FHIR Composition)"
+                              : "Generar documento clínico (FHIR Composition)"}
+                        </button>
+                      )}
 
                     {!allObservationsReady && (
                       <div className="alert-warning">
