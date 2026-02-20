@@ -450,10 +450,12 @@ label {
 
 .modal-body {
   padding: 0rem 1.2rem 0rem 1.2rem;
-  max-height: 420px;
-  overflow: auto;
 }
 
 .modal-json-wrapper {
+  max-height: 420px;
+  overflow-y: auto;
   padding: 0.6rem 1.2rem 1.6rem 1.2rem;
+  box-sizing: border-box;
+  background-color: #020617;
 }
