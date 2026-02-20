@@ -608,6 +608,7 @@ function App() {
                   </pre>
                 )}
               </div>
+              <div className="modal-tabs"></div>
             </div>
           </div>
         )}
