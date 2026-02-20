@@ -351,13 +351,13 @@ function App() {
                             )}
                           </button>
 
-                          <buton
+                          <button
                             type="button"
                             className="copy-button"
                             onClick={() => setShowObsModal(true)}
                           >
                             Ver Observations FHIR
-                          </buton>
+                          </button>
                         </div>
 
                         <pre className="fhir-json-pre">
