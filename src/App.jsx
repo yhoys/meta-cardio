@@ -587,28 +587,26 @@ function App() {
                 </button>
               </div>
               <div className="modal-body">
-                <div className="modal-json-wrapper">
-                  {activeObsTab === "findrisc" && findriscObs && (
-                    <pre className="fhir-json-pre--modal">
-                      {JSON.stringify(findriscObs, null, 2)}
-                    </pre>
-                  )}
-                  {activeObsTab === "imc" && imcObs && (
-                    <pre className="fhir-json-pre--modal">
-                      {JSON.stringify(imcObs, null, 2)}
-                    </pre>
-                  )}
-                  {activeObsTab === "waist" && waistObs && (
-                    <pre className="fhir-json-pre--modal">
-                      {JSON.stringify(waistObs, null, 2)}
-                    </pre>
-                  )}
-                  {activeObsTab === "framingham" && framinghamObs && (
-                    <pre className="fhir-json-pre--modal">
-                      {JSON.stringify(framinghamObs, null, 2)}
-                    </pre>
-                  )}
-                </div>
+                {activeObsTab === "findrisc" && findriscObs && (
+                  <pre className="fhir-json-pre--modal">
+                    {JSON.stringify(findriscObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "imc" && imcObs && (
+                  <pre className="fhir-json-pre--modal">
+                    {JSON.stringify(imcObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "waist" && waistObs && (
+                  <pre className="fhir-json-pre--modal">
+                    {JSON.stringify(waistObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "framingham" && framinghamObs && (
+                  <pre className="fhir-json-pre--modal">
+                    {JSON.stringify(framinghamObs, null, 2)}
+                  </pre>
+                )}
               </div>
             </div>
           </div>
