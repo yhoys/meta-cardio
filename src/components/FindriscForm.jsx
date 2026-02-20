@@ -277,7 +277,7 @@ function FindriscForm({
         </div>
 
         <div className="form-field">
-          <label>Uso de antihipertensivos:</label>
+          <label>Tratamiento antihipertensivo:</label>
           <div className="radio-group">
             <label className="radio-option">
               <input

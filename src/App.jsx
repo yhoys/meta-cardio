@@ -256,14 +256,44 @@ function App() {
 
                 {/* 1. Paciente */}
                 {activeStep === "paciente" && (
-                  <div style={{ marginTop: "2rem" }}>
-                    <h3>Datos del paciente ({patientAge} años)</h3>
-                    <p>
-                      Nombre: {selectedPatient.name[0].given.join(" ")}{" "}
-                      {selectedPatient.name[0].family}
-                    </p>
-                    <p>Género: {selectedPatient.gender}</p>
-                    <p>Fecha de nacimiento: {selectedPatient.birthDate}</p>
+                  <div className="patient-summary">
+                    <div className="patient-card">
+                      <div className="patient-card-header">
+                        <div className="patient-avatar">
+                          {selectedPatient.name[0].given[0][0]}
+                          {selectedPatient.name[0].family[0][0]}
+                        </div>
+                        <div>
+                          <h3>Datos del paciente ({patientAge} años)</h3>
+                          <p>ID FHIR: {selectedPatient.id}</p>
+                        </div>
+                      </div>
+
+                      <div className="patient-card-body">
+                        <div className="patient-row">
+                          <span className="label">Nombre completo</span>
+                          <span className="value">
+                            {selectedPatient.name[0].given.join(" ")}{" "}
+                            {selectedPatient.name[0].family}
+                          </span>
+                        </div>
+
+                        <div className="patient-row two-cols">
+                          <div>
+                            <span className="label">Género</span>
+                            <span className="value">
+                              {selectedPatient.gender}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="label">Fecha de nacimiento</span>
+                            <span className="value">
+                              {selectedPatient.birthDate}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
 
