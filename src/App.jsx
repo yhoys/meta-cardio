@@ -29,6 +29,9 @@ function App() {
 
   const [activeStep, setActiveStep] = useState("paciente");
 
+  const [showObsModal, setShowObsModal] = useState(false);
+  const [activeObsTab, setActiveObsTab] = useState("findrisc");
+
   const patientAge = useMemo(() => {
     if (!selectedPatient?.birthDate) return null;
     const hoy = new Date();
@@ -296,7 +299,7 @@ function App() {
                           {isGenerating
                             ? "Generando documento FHIR..."
                             : isCompositionStale
-                              ? "Regenear documento clínico (FHIR Composition)"
+                              ? "Regenerar documento clínico (FHIR Composition)"
                               : "Generar documento clínico (FHIR Composition)"}
                         </button>
                       )}
@@ -321,6 +324,16 @@ function App() {
                           <h3 style={{ margin: 0 }}>
                             Documento Clínico FHIR (Composition)
                           </h3>
+                        </div>
+
+                        <div
+                          style={{
+                            marginTop: "0.5rem",
+                            marginBottom: "0.75rem",
+                            display: "flex",
+                            gap: "0.75rem",
+                          }}
+                        >
                           <button
                             onClick={copyComposition}
                             className={`copy-button ${copied ? "copied" : ""}`}
@@ -337,6 +350,14 @@ function App() {
                               </>
                             )}
                           </button>
+
+                          <buton
+                            type="button"
+                            className="copy-button"
+                            onClick={() => setShowObsModal(true)}
+                          >
+                            Ver Observations FHIR
+                          </buton>
                         </div>
 
                         <pre className="fhir-json-pre">
@@ -468,6 +489,88 @@ function App() {
               </>
             )}
           </>
+        )}
+
+        {showObsModal && (
+          <div
+            className="modal-backdrop"
+            onClick={() => setShowObsModal(false)}
+          >
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Observations FHIR</h3>
+                <button
+                  type="button"
+                  className="modal-close"
+                  onClick={() => setShowObsModal(false)}
+                >
+                  x
+                </button>
+              </div>
+
+              <div className="modal-tabs">
+                <button
+                  className={
+                    "modal-tab" + (activeObsTab === "findrisc" ? " active" : "")
+                  }
+                  onClick={() => setActiveObsTab("findrisc")}
+                  disabled={!findriscObs}
+                >
+                  FINDRISC
+                </button>
+                <button
+                  className={
+                    "modal-tab" + (activeObsTab === "imc" ? " active" : "")
+                  }
+                  onClick={() => setActiveObsTab("imc")}
+                  disabled={!imcObs}
+                >
+                  IMC
+                </button>
+                <button
+                  className={
+                    "modal-tab" + (activeObsTab === "waist" ? " active" : "")
+                  }
+                  onClick={() => setActiveObsTab("waist")}
+                  disabled={!waistObs}
+                >
+                  Cintura
+                </button>
+                <button
+                  className={
+                    "modal-tab" +
+                    (activeObsTab === "framingham" ? " active" : "")
+                  }
+                  onClick={() => setActiveObsTab("framingham")}
+                  disabled={!framinghamObs}
+                >
+                  Framingham
+                </button>
+              </div>
+              <div className="modal-body">
+                {activeObsTab === "findrisc" && findriscObs && (
+                  <pre className="fhir-json-pre">
+                    {JSON.stringify(findriscObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "imc" && imcObs && (
+                  <pre className="fhir-json-pre">
+                    {JSON.stringify(imcObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "waist" && waistObs && (
+                  <pre className="fhir-json-pre">
+                    {JSON.stringify(waistObs, null, 2)}
+                  </pre>
+                )}
+                {activeObsTab === "framingham" && framinghamObs && (
+                  <pre className="fhir-json-pre">
+                    {JSON.stringify(framinghamObs, null, 2)}
+                  </pre>
+                )}
+              </div>
+            </div>
+          </div>
         )}
       </main>
     </div>
