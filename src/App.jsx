@@ -286,6 +286,7 @@ function App() {
 
                         <div className="patient-row two-cols">
                           <div>
+                            <span className="label">Género: </span>
                             <span className="value">
                               {getGeneroLabel(selectedPatient.gender)}
                             </span>
