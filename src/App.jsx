@@ -25,6 +25,7 @@ function App() {
   const [compositionJson, setCompositionJson] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedObs, setCopiedObs] = useState(false);
   const [isCompositionStale, setIsCompositionStale] = useState(false);
 
   const [activeStep, setActiveStep] = useState("paciente");
@@ -112,6 +113,18 @@ function App() {
     }
   };
 
+  const copyActiveObservation = () => {
+    let obs = null;
+    if (activeObsTab === "findrisc") obs = findriscObs;
+    else if (activeObsTab === "imc") obs = imcObs;
+    else if (activeObsTab === "waist") obs = waistObs;
+    else if (activeObsTab === "framingham") obs = framinghamObs;
+    if (!obs) return;
+    navigator.clipboard.writeText(JSON.stringify(obs, null, 2));
+    setCopiedObs(true);
+    setTimeout(() => setCopiedObs(false), 1500);
+  };
+
   // Resetear todo el estado para iniciar un nuevo cálculo
   const handleResetAll = () => {
     setStarted(false);
@@ -124,6 +137,7 @@ function App() {
     setCompositionJson(null);
     setIsGenerating(false);
     setCopied(false);
+    setCopiedObs(false);
     setActiveStep("paciente");
   };
 
@@ -499,13 +513,38 @@ function App() {
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
                 <h3>Observations FHIR</h3>
-                <button
-                  type="button"
-                  className="modal-close"
-                  onClick={() => setShowObsModal(false)}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "0.5rem",
+                    alignItems: "center",
+                  }}
                 >
-                  x
-                </button>
+                  <button
+                    onClick={copyActiveObservation}
+                    className={`copy-button ${copiedObs ? "copied" : ""}`}
+                  >
+                    {copiedObs ? (
+                      <>
+                        <FaCheck size={12} />
+                        <span>Copiado</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaRegCopy size={12} />
+                        <span>Copiar JSON</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="modal-close"
+                    onClick={() => setShowObsModal(false)}
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
 
               <div className="modal-tabs">
@@ -549,22 +588,22 @@ function App() {
               </div>
               <div className="modal-body">
                 {activeObsTab === "findrisc" && findriscObs && (
-                  <pre className="fhir-json-pre">
+                  <pre className="fhir-json-pre--modal">
                     {JSON.stringify(findriscObs, null, 2)}
                   </pre>
                 )}
                 {activeObsTab === "imc" && imcObs && (
-                  <pre className="fhir-json-pre">
+                  <pre className="fhir-json-pre--modal">
                     {JSON.stringify(imcObs, null, 2)}
                   </pre>
                 )}
                 {activeObsTab === "waist" && waistObs && (
-                  <pre className="fhir-json-pre">
+                  <pre className="fhir-json-pre--modal">
                     {JSON.stringify(waistObs, null, 2)}
                   </pre>
                 )}
                 {activeObsTab === "framingham" && framinghamObs && (
-                  <pre className="fhir-json-pre">
+                  <pre className="fhir-json-pre--modal">
                     {JSON.stringify(framinghamObs, null, 2)}
                   </pre>
                 )}

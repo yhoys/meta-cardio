@@ -338,6 +338,17 @@ label {
   margin: 0;
 }
 
+.fhir-json-pre--modal {
+  background-color: #020617;
+  border: 1px solid #1f2937;
+  color: #f1f5f9;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
 /* Tablas referencias */
 .refs-table {
   width: 100%;
@@ -379,6 +390,7 @@ label {
   background: #0f172a;
   color: #e5e7eb;
   border-radius: 12px;
+  border: 1px solid #22c55e;
   max-width: 800px;
   width: 100%;
   margin: 0 1rem;
@@ -440,4 +452,5 @@ label {
   padding: 0.9rem 1.2rem 1.2rem;
   max-height: 420px;
   overflow: auto;
+  background: #020617;
 }
