@@ -164,6 +164,12 @@ function App() {
     return false;
   };
 
+  const getGeneroLabel = (gender) => {
+    if (gender === "female") return "Femenino";
+    if (gender === "male") return "Masculino";
+    return gender ?? "No especificado";
+  };
+
   return (
     <div className="app-container">
       <header className="app-header">
@@ -280,13 +286,12 @@ function App() {
 
                         <div className="patient-row two-cols">
                           <div>
-                            <span className="label">Género</span>
                             <span className="value">
-                              {selectedPatient.gender}
+                              {getGeneroLabel(selectedPatient.gender)}
                             </span>
                           </div>
                           <div>
-                            <span className="label">Fecha de nacimiento</span>
+                            <span className="label">Fecha de nacimiento: </span>
                             <span className="value">
                               {selectedPatient.birthDate}
                             </span>
