@@ -8,6 +8,8 @@ export function buildTransactionBundle({
   const patientFullUrl = "urn:uuid:patient-1";
   const deviceFullUrl = "urn:uuid:device-1";
 
+  const { id: ID_UNUSED, ...patientWithoutId } = patient;
+
   const observationsWithRefs = observations.map((obs) => ({
     ...obs,
     subject: { reference: patientFullUrl },
@@ -25,7 +27,7 @@ export function buildTransactionBundle({
     entry: [
       {
         fullUrl: patientFullUrl,
-        resource: patient,
+        resource: patientWithoutId,
         request: {
           method: "POST",
           url: "Patient",

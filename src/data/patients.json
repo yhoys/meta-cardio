@@ -5,6 +5,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0001",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -79,6 +80,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0002",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -153,6 +155,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0003",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -227,6 +230,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0004",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -301,6 +305,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0005",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -375,6 +380,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0006",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -449,6 +455,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0007",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -523,6 +530,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0008",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -597,6 +605,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0009",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
@@ -671,6 +680,7 @@
     {
       "resource": {
         "resourceType": "Patient",
+        "id": "pat-0010",
         "identifier": [
           {
             "system": "https://demo.com/id-oficial",
