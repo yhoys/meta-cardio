@@ -427,6 +427,19 @@ function App() {
                         </button>
                       )}
 
+                    {compositionJson && !isCompositionStale && (
+                      <button
+                        type="button"
+                        className="primary-button"
+                        onClick={handleSendToFhir}
+                        disabled={sending}
+                      >
+                        {sending
+                          ? "Enviando Bundle a FHIR..."
+                          : "Enviar a servidor FHIR (Bundle transaction)"}
+                      </button>
+                    )}
+
                     {!allObservationsReady && (
                       <div className="alert-warning">
                         Completa los formularios de FINDRISC e IMC/Framingham
@@ -482,17 +495,6 @@ function App() {
                             onClick={() => setShowObsModal(true)}
                           >
                             Ver Observations FHIR
-                          </button>
-
-                          <button
-                            type="button"
-                            className="primary-button"
-                            onClick={handleSendToFhir}
-                            disabled={sending}
-                          >
-                            {sending
-                              ? "Enviando Bundle a FHIR..."
-                              : "Enviar a servidor FHIR (Bundle transaction)"}
                           </button>
                         </div>
 
