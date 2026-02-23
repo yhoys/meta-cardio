@@ -93,6 +93,7 @@ function App() {
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
     setActiveStep("paciente");
+    setPatientSelectionEnabled(false);
   };
 
   const handleGenerateComposition = async () => {
