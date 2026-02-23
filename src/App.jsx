@@ -459,6 +459,53 @@ function App() {
                       </div>
                     )}
 
+                    {sendResult && (
+                      <div
+                        className={
+                          "fhir-send-result " +
+                          (sendResult.ok ? "success" : "error")
+                        }
+                        style={{ marginBottom: "0.75rem" }}
+                      >
+                        {sendResult.ok ? (
+                          <>
+                            <p>
+                              Envío existoso al servidor FHIR (HTTP{""}{" "}
+                              {sendResult.status}).
+                            </p>
+                            {sendResult.links?.length > 0 && (
+                              <>
+                                <p>Recursos creados/actualizados:</p>
+                                <ul>
+                                  {sendResult.links.map((url) => (
+                                    <li key={url}>
+                                      <a
+                                        href={url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {url}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              Falló el envío al servidor FHIR (HTTP{""}
+                              {sendResult.status}).
+                            </p>
+                            {sendResult.errorText && (
+                              <p>Detalle: {sendResult.errorText}</p>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    )}
+
                     {compositionJson && (
                       <div className="fhir-json-container">
                         <div
@@ -509,53 +556,6 @@ function App() {
                             Ver Observations FHIR
                           </button>
                         </div>
-
-                        {sendResult && (
-                          <div
-                            className={
-                              "fhir-send-result " +
-                              (sendResult.ok ? "success" : "error")
-                            }
-                            style={{ marginBottom: "0.75rem" }}
-                          >
-                            {sendResult.ok ? (
-                              <>
-                                <p>
-                                  Envío existoso al servidor FHIR (HTTP{""}{" "}
-                                  {sendResult.status}).
-                                </p>
-                                {sendResult.links?.length > 0 && (
-                                  <>
-                                    <p>Recursos creados/actualizados:</p>
-                                    <ul>
-                                      {sendResult.links.map((url) => (
-                                        <li key={url}>
-                                          <a
-                                            href={url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                          >
-                                            {url}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </>
-                                )}
-                              </>
-                            ) : (
-                              <>
-                                <p>
-                                  Falló el envío al servidor FHIR (HTTP{""}
-                                  {sendResult.status}).
-                                </p>
-                                {sendResult.errorText && (
-                                  <p>Detalle: {sendResult.errorText}</p>
-                                )}
-                              </>
-                            )}
-                          </div>
-                        )}
 
                         <pre className="fhir-json-pre">
                           {JSON.stringify(compositionJson, null, 2)}
