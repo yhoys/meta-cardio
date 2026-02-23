@@ -13,6 +13,9 @@ import {
   FaBook,
 } from "react-icons/fa";
 import { FaRegCopy, FaCheck, FaArrowsRotate } from "react-icons/fa6";
+import { buildTransactionBundle } from "./fhir/buildTransactionBundle";
+import { sendTransactionBundle } from "./fhir/fhirClient";
+import deviceResource from "./data/device.json";
 
 function App() {
   const [started, setStarted] = useState(false);
@@ -32,6 +35,9 @@ function App() {
 
   const [showObsModal, setShowObsModal] = useState(false);
   const [activeObsTab, setActiveObsTab] = useState("findrisc");
+
+  const [sending, setSending] = useState(false);
+  const [sendResult, setSendResult] = useState(null);
 
   const patientAge = useMemo(() => {
     if (!selectedPatient?.birthDate) return null;
@@ -139,6 +145,75 @@ function App() {
     setCopied(false);
     setCopiedObs(false);
     setActiveStep("paciente");
+    setSending(false);
+    setSendResult(null);
+  };
+
+  const handleSendToFhir = async () => {
+    if (!selectedPatient || !compositionJson) return;
+
+    try {
+      setSending(true);
+      setSendResult(null);
+
+      const observations = [
+        framinghamObs,
+        findriscObs,
+        imcObs,
+        waistObs,
+      ].filter(Boolean);
+
+      const bundle = buildTransactionBundle({
+        patient: selectedPatient,
+        device: deviceResource,
+        observations,
+        composition: compositionJson,
+      });
+
+      const { ok, status, body } = await sendTransactionBundle(bundle);
+
+      if (!ok) {
+        let errorText = `Error HTTP ${status}`;
+        if (body?.resourceType === "OperationOutcome" && body.issue?.length) {
+          errorText = body.issue
+            .map((i) => i.diagnostics || i.details?.text)
+            .filter(Boolean)
+            .join(" | ");
+        }
+
+        setSendResult({
+          ok: false,
+          status,
+          errorText,
+          links: [],
+        });
+        return;
+      }
+
+      let links = [];
+      if (body?.resourceType === "Bundle" && Array.isArray(body.entry)) {
+        links = body.entry
+          .map((e) => e.response?.location)
+          .filter(Boolean)
+          .map((loc) => `http://fhirserver.hl7fundamentals.org/fhir/${loc}`);
+      }
+
+      setSendResult({
+        ok: true,
+        status,
+        links,
+        errorText: null,
+      });
+    } catch (e) {
+      setSendResult({
+        ok: false,
+        status: 0,
+        errorText: e.message,
+        links: [],
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   const steps = [
@@ -201,7 +276,6 @@ function App() {
 
             {selectedPatient && patientAge && (
               <>
-                {/* Barra de pasos + botón Nuevo cálculo */}
                 <div
                   style={{
                     display: "flex",
@@ -260,7 +334,7 @@ function App() {
                   </button>
                 </div>
 
-                {/* 1. Paciente */}
+                {/*Paciente*/}
                 {activeStep === "paciente" && (
                   <div className="patient-summary">
                     <div className="patient-card">
@@ -303,7 +377,6 @@ function App() {
                   </div>
                 )}
 
-                {/* Formularios SIEMPRE montados, solo ocultos por pestaña */}
                 <div style={{ marginTop: "2rem" }}>
                   <div
                     style={{
@@ -336,7 +409,7 @@ function App() {
                   </div>
                 </div>
 
-                {/* 4. Documento FHIR */}
+                {/*Documento FHIR*/}
                 {activeStep === "reporte" && (
                   <>
                     {allObservationsReady &&
@@ -382,6 +455,8 @@ function App() {
                             marginBottom: "0.75rem",
                             display: "flex",
                             gap: "0.75rem",
+                            flexWrap: "wrap",
+                            alignItems: "center",
                           }}
                         >
                           <button
@@ -408,7 +483,65 @@ function App() {
                           >
                             Ver Observations FHIR
                           </button>
+
+                          <button
+                            type="button"
+                            className="primary-button"
+                            onClick={handleSendToFhir}
+                            disabled={sending}
+                          >
+                            {sending
+                              ? "Enviando Bundle a FHIR..."
+                              : "Enviar a servidor FHIR (Bundle transaction)"}
+                          </button>
                         </div>
+
+                        {sendResult && (
+                          <div
+                            className={
+                              "fhir-send-result " +
+                              (sendResult.ok ? "success" : "error")
+                            }
+                            style={{ marginBottom: "0.75rem" }}
+                          >
+                            {sendResult.ok ? (
+                              <>
+                                <p>
+                                  Envío existoso al servidor FHIR (HTTP{""}{" "}
+                                  {sendResult.status}).
+                                </p>
+                                {sendResult.links?.length > 0 && (
+                                  <>
+                                    <p>Recursos creados/actualizados:</p>
+                                    <ul>
+                                      {sendResult.links.map((url) => (
+                                        <li key={url}>
+                                          <a
+                                            href={url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                          >
+                                            {url}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                <p>
+                                  Falló el envío al servidor FHIR (HTTP{""}
+                                  {sendResult.status}).
+                                </p>
+                                {sendResult.errorText && (
+                                  <p>Detalle: {sendResult.errorText}</p>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        )}
 
                         <pre className="fhir-json-pre">
                           {JSON.stringify(compositionJson, null, 2)}
@@ -418,7 +551,7 @@ function App() {
                   </>
                 )}
 
-                {/* 5. Referencias */}
+                {/*Referencias*/}
                 {activeStep === "referencias" && (
                   <div
                     className="section-card"
@@ -578,7 +711,7 @@ function App() {
                     className="modal-close"
                     onClick={() => setShowObsModal(false)}
                   >
-                    ×
+                    x
                   </button>
                 </div>
               </div>
