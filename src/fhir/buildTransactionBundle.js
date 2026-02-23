@@ -5,25 +5,42 @@ export function buildTransactionBundle({
   observations,
   composition,
 }) {
+  const patientFullUrl = "urn:uuid:patient-1";
+  const deviceFullUrl = "urn:uuid:device-1";
+
+  const observationsWithRefs = observations.map((obs) => ({
+    ...obs,
+    subject: { reference: patientFullUrl },
+    device: { reference: deviceFullUrl },
+  }));
+
+  const compositionWithRefs = {
+    ...composition,
+    subject: { reference: patientFullUrl },
+  };
+
   return {
     resourceType: "Bundle",
     type: "transaction",
     entry: [
       {
+        fullUrl: patientFullUrl,
         resource: patient,
         request: {
           method: "POST",
-          url: `Patient/${patient.id}`,
+          url: "Patient",
         },
       },
       {
+        fullUrl: deviceFullUrl,
         resource: device,
         request: {
-          method: "POST",
+          method: "PUT",
           url: "Device/meta-cardio-app",
         },
       },
-      ...observations.map((obs) => ({
+      ...observationsWithRefs.map((obs, i) => ({
+        fullUrl: `urn:uuid:obs-${i + 1}`,
         resource: obs,
         request: {
           method: "POST",
@@ -31,7 +48,8 @@ export function buildTransactionBundle({
         },
       })),
       {
-        resource: composition,
+        fullUrl: "urn:uuid:composition-1",
+        resource: compositionWithRefs,
         request: {
           method: "POST",
           url: "Composition",

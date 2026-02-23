@@ -1,11 +1,12 @@
 import patientsBundle from "../data/patients.json";
 
-function PatientSelector({ onPatientSelect }) {
+function PatientSelector({ onPatientSelect, disabled = false }) {
   const patients = (patientsBundle.entry || [])
     .map((e) => e.resource)
     .filter((p) => p && p.active);
 
   const handleChange = (e) => {
+    if (disabled) return;
     const id = e.target.value;
     const selected = patients.find((p) => p.id === id) || null;
     onPatientSelect(selected);
@@ -32,7 +33,12 @@ function PatientSelector({ onPatientSelect }) {
 
       <div className="form-field" style={{ maxWidth: "100%" }}>
         <label htmlFor="patient-select">Paciente</label>
-        <select id="patient-select" onChange={handleChange} defaultValue="">
+        <select
+          id="patient-select"
+          onChange={handleChange}
+          defaultValue=""
+          disabled={disabled}
+        >
           <option value="" disabled>
             -- Seleccione un paciente --
           </option>

@@ -30,14 +30,12 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [copiedObs, setCopiedObs] = useState(false);
   const [isCompositionStale, setIsCompositionStale] = useState(false);
-
   const [activeStep, setActiveStep] = useState("paciente");
-
   const [showObsModal, setShowObsModal] = useState(false);
   const [activeObsTab, setActiveObsTab] = useState("findrisc");
-
   const [sending, setSending] = useState(false);
   const [sendResult, setSendResult] = useState(null);
+  const [patientSelectionEnabled, setPatientSelectionEnabled] = useState(true);
 
   const patientAge = useMemo(() => {
     if (!selectedPatient?.birthDate) return null;
@@ -86,7 +84,14 @@ function App() {
     compositionJson,
   ]);
 
+  useEffect(() => {
+    if (compositionJson) {
+      setPatientSelectionEnabled(false);
+    }
+  }, [compositionJson]);
+
   const handlePatientSelect = (patient) => {
+    if (!patientSelectionEnabled) return;
     setSelectedPatient(patient);
     setActiveStep("paciente");
   };
@@ -147,6 +152,7 @@ function App() {
     setActiveStep("paciente");
     setSending(false);
     setSendResult(null);
+    setPatientSelectionEnabled(true);
   };
 
   const handleSendToFhir = async () => {
@@ -272,7 +278,10 @@ function App() {
 
         {started && (
           <>
-            <PatientSelector onPatientSelect={handlePatientSelect} />
+            <PatientSelector
+              onPatientSelect={handlePatientSelect}
+              disabled={!patientSelectionEnabled}
+            />
 
             {selectedPatient && patientAge && (
               <>
@@ -329,6 +338,7 @@ function App() {
                     type="button"
                     className="step-button"
                     onClick={handleResetAll}
+                    title="Iniciar nueva consulta"
                   >
                     <FaArrowsRotate size={14} />
                   </button>
