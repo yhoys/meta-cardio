@@ -91,7 +91,6 @@ function App() {
   }, [compositionJson]);
 
   const handlePatientSelect = (patient) => {
-    if (!patientSelectionEnabled) return;
     setSelectedPatient(patient);
     setActiveStep("paciente");
   };
