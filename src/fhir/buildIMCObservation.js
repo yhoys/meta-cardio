@@ -1,4 +1,4 @@
-export function buildIMCObservation(patientId, imcValue, classification) {
+export function buildIMCObservation(imcValue, classification) {
   return {
     resourceType: "Observation",
     id: `imc-${Date.now()}`,
@@ -26,10 +26,6 @@ export function buildIMCObservation(patientId, imcValue, classification) {
         },
       ],
       text: "Índice de Masa Corporal",
-    },
-
-    subject: {
-      reference: `Patient/${patientId}`,
     },
 
     effectiveDateTime: new Date().toISOString(),

@@ -1,10 +1,7 @@
 // src/fhir/buildTransactionBundle.js
-export function buildTransactionBundle({
-  patient,
-  device,
-  observations,
-  composition,
-}) {
+import { buildComposition } from "./buildComposition";
+
+export function buildTransactionBundle({ patient, device, observations }) {
   const patientFullUrl = "urn:uuid:patient-1";
   const deviceFullUrl = "urn:uuid:device-1";
 
@@ -15,6 +12,20 @@ export function buildTransactionBundle({
     subject: { reference: patientFullUrl },
     device: { reference: deviceFullUrl },
   }));
+
+  const obsFullUrls = observationsWithRefs.map(
+    (_obs, i) => `urn:uuid:obs-${i + 1}`,
+  );
+
+  const [imcRef, findriscRef, framinghamRef, waistRef] = obsFullUrls;
+
+  const composition = buildComposition(
+    patientFullUrl,
+    findriscRef,
+    imcRef,
+    framinghamRef,
+    waistRef,
+  );
 
   const compositionWithRefs = {
     ...composition,
@@ -42,7 +53,7 @@ export function buildTransactionBundle({
         },
       },
       ...observationsWithRefs.map((obs, i) => ({
-        fullUrl: `urn:uuid:obs-${i + 1}`,
+        fullUrl: obsFullUrls[i],
         resource: obs,
         request: {
           method: "POST",

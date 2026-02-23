@@ -1,9 +1,9 @@
 export function buildComposition(
-  patientId,
-  findriscObservation,
-  imcObservation,
-  framinghamObservation,
-  waistObservation,
+  patientRef,
+  findriscRef,
+  imcRef,
+  framinghamRef,
+  waistRef,
 ) {
   return {
     resourceType: "Composition",
@@ -34,7 +34,7 @@ export function buildComposition(
     },
 
     subject: {
-      reference: `Patient/${patientId}`,
+      reference: patientRef,
     },
 
     date: new Date().toISOString(),
@@ -57,7 +57,7 @@ export function buildComposition(
         },
         entry: [
           {
-            reference: `Observation/${imcObservation.id}`,
+            reference: imcRef,
           },
         ],
       },
@@ -69,7 +69,7 @@ export function buildComposition(
         },
         entry: [
           {
-            reference: `Observation/${findriscObservation.id}`,
+            reference: findriscRef,
           },
         ],
       },
@@ -81,7 +81,7 @@ export function buildComposition(
         },
         entry: [
           {
-            reference: `Observation/${framinghamObservation.id}`,
+            reference: framinghamRef,
           },
         ],
       },
@@ -93,7 +93,7 @@ export function buildComposition(
         },
         entry: [
           {
-            reference: `Observation/${waistObservation.id}`,
+            reference: waistRef,
           },
         ],
       },

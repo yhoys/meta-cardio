@@ -1,5 +1,4 @@
 export function buildFraminghamObservation(
-  patientId,
   riesgoOriginal,
   riesgoAjustado,
   clasificacion,
@@ -33,10 +32,6 @@ export function buildFraminghamObservation(
         },
       ],
       text: "Framingham General Cardiovascular Risk (D'Agostino 2008)",
-    },
-
-    subject: {
-      reference: `Patient/${patientId}`,
     },
 
     effectiveDateTime: new Date().toISOString(),

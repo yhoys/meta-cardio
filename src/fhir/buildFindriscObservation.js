@@ -1,5 +1,4 @@
 export function buildFindriscObservation(
-  patientId,
   score,
   classification,
   riskPercentage,
@@ -36,10 +35,6 @@ export function buildFindriscObservation(
         },
       ],
       text: "Puntaje total FINDRISC",
-    },
-
-    subject: {
-      reference: `Patient/${patientId}`,
     },
 
     effectiveDateTime: new Date().toISOString(),

@@ -1,4 +1,4 @@
-export function buildWaistObservation(patientId, waistCm) {
+export function buildWaistObservation(waistCm) {
   return {
     resourceType: "Observation",
     id: `waist-${Date.now()}`,
@@ -26,10 +26,6 @@ export function buildWaistObservation(patientId, waistCm) {
         },
       ],
       text: "Perímetro abdominal",
-    },
-
-    subject: {
-      reference: `Patient/${patientId}`,
     },
 
     effectiveDateTime: new Date().toISOString(),
