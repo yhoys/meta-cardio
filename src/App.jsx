@@ -415,6 +415,7 @@ function App() {
                     {allObservationsReady &&
                       (!compositionJson || isCompositionStale) && (
                         <button
+                          type="button"
                           className="primary-button"
                           onClick={handleGenerateComposition}
                           disabled={isGenerating}
@@ -427,7 +428,7 @@ function App() {
                         </button>
                       )}
 
-                    {compositionJson && !isCompositionStale && (
+                    {compositionJson && (
                       <button
                         type="button"
                         className="primary-button"
