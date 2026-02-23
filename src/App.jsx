@@ -429,7 +429,7 @@ function App() {
                           </button>
                         )}
 
-                        {compositionJson && !isCompositionStale && (
+                        {compositionJson && (
                           <button
                             type="button"
                             className="primary-button"
