@@ -136,7 +136,6 @@ function App() {
     setTimeout(() => setCopiedObs(false), 1500);
   };
 
-  // Resetear todo el estado para iniciar un nuevo cálculo
   const handleResetAll = () => {
     setStarted(false);
     setSelectedPatient(null);
@@ -285,15 +284,8 @@ function App() {
 
             {selectedPatient && patientAge && (
               <>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginTop: "1.5rem",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <nav className="step-nav" style={{ flex: 1 }}>
+                <div className="steps-header">
+                  <nav className="step-nav">
                     {steps.map((step, index) => {
                       const completed =
                         (step.id === "paciente" && selectedPatient) ||
@@ -314,10 +306,7 @@ function App() {
                         .join(" ");
 
                       return (
-                        <div
-                          key={step.id}
-                          style={{ display: "flex", alignItems: "center" }}
-                        >
+                        <div key={step.id} className="step-wrapper">
                           {index > 0 && (
                             <span className="step-separator">›</span>
                           )}
@@ -344,7 +333,6 @@ function App() {
                   </button>
                 </div>
 
-                {/*Paciente*/}
                 {activeStep === "paciente" && (
                   <div className="patient-summary">
                     <div className="patient-card">
@@ -387,7 +375,7 @@ function App() {
                   </div>
                 )}
 
-                <div style={{ marginTop: "2rem" }}>
+                <div className="forms-wrapper">
                   <div
                     style={{
                       display: activeStep === "findrisc" ? "block" : "none",
@@ -417,7 +405,6 @@ function App() {
                   </div>
                 </div>
 
-                {/*Documento FHIR*/}
                 {activeStep === "reporte" && (
                   <>
                     {allObservationsReady && (
@@ -465,7 +452,6 @@ function App() {
                           "fhir-send-result " +
                           (sendResult.ok ? "success" : "error")
                         }
-                        style={{ marginBottom: "0.75rem" }}
                       >
                         {sendResult.ok ? (
                           <>
@@ -520,29 +506,11 @@ function App() {
 
                     {compositionJson && (
                       <div className="fhir-json-container">
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "0.5rem",
-                            alignItems: "center",
-                            marginBottom: "0.75rem",
-                          }}
-                        >
-                          <h3 style={{ margin: 0 }}>
-                            Documento Clínico FHIR (Composition)
-                          </h3>
+                        <div className="fhir-json-header">
+                          <h3>Documento Clínico FHIR (Composition)</h3>
                         </div>
 
-                        <div
-                          style={{
-                            marginTop: "0.5rem",
-                            marginBottom: "0.75rem",
-                            display: "flex",
-                            gap: "0.75rem",
-                            flexWrap: "wrap",
-                            alignItems: "center",
-                          }}
-                        >
+                        <div className="fhir-json-actions">
                           <button
                             onClick={copyComposition}
                             className={`copy-button ${copied ? "copied" : ""}`}
@@ -577,12 +545,8 @@ function App() {
                   </>
                 )}
 
-                {/*Referencias*/}
                 {activeStep === "referencias" && (
-                  <div
-                    className="section-card"
-                    style={{ marginTop: "2rem", textAlign: "left" }}
-                  >
+                  <div className="section-card referencias-card">
                     <h2>Protocolos y referencias</h2>
                     <small>
                       Puntos de corte de las escalas y bibliografía utilizada
@@ -668,13 +632,7 @@ function App() {
                     <h3 style={{ marginTop: "1.5rem", fontSize: "1rem" }}>
                       3. Bibliografía (sustento científico)
                     </h3>
-                    <ul
-                      style={{
-                        fontSize: "0.85rem",
-                        color: "#64748b",
-                        paddingLeft: "1.2rem",
-                      }}
-                    >
+                    <ul className="refs-biblio-list">
                       <li>
                         Lindström J, Tuomilehto J. The Diabetes Risk Score: a
                         practical tool to predict type 2 diabetes. Diabetes
@@ -708,13 +666,7 @@ function App() {
             <div className="modal" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
                 <h3>Observations FHIR</h3>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "0.5rem",
-                    alignItems: "center",
-                  }}
-                >
+                <div className="modal-header-actions">
                   <button
                     onClick={copyActiveObservation}
                     className={`copy-button ${copiedObs ? "copied" : ""}`}
@@ -781,6 +733,7 @@ function App() {
                   Framingham
                 </button>
               </div>
+
               <div className="modal-body">
                 {activeObsTab === "findrisc" && findriscObs && (
                   <pre className="fhir-json-pre--modal">
