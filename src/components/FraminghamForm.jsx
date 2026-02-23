@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { buildFraminghamObservation } from "../fhir/buildFraminghamObservation";
 
-function FraminghamForm({ age, gender, imc, patientId, setFraminghamObs }) {
+function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
   const [usaLaboratorio, setUsaLaboratorio] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -202,7 +202,6 @@ function FraminghamForm({ age, gender, imc, patientId, setFraminghamObs }) {
       usaLaboratorio === "si" ? "Lipid-based model" : "BMI-based model";
 
     const observation = buildFraminghamObservation(
-      patientId,
       r.original,
       r.ajustado,
       clasificacion.nivel,

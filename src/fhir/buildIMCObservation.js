@@ -1,4 +1,7 @@
 export function buildIMCObservation(imcValue, classification) {
+  const numericImc =
+    typeof imcValue === "string" ? parseFloat(imcValue) : imcValue;
+
   return {
     resourceType: "Observation",
     id: `imc-${Date.now()}`,
@@ -31,7 +34,7 @@ export function buildIMCObservation(imcValue, classification) {
     effectiveDateTime: new Date().toISOString(),
 
     valueQuantity: {
-      value: parseFloat(imcValue.toFixed(2)),
+      value: Number(numericImc.toFixed(2)),
       unit: "kg/m2",
       system: "http://unitsofmeasure.org",
       code: "kg/m2",

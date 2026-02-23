@@ -396,7 +396,6 @@ function App() {
                     <FindriscForm
                       age={patientAge}
                       gender={selectedPatient.gender}
-                      patientId={selectedPatient.id}
                       setImcGlobal={setImcGlobal}
                       setImcObs={setImcObs}
                       setFindriscObs={setFindriscObs}
@@ -412,7 +411,6 @@ function App() {
                     <FraminghamForm
                       age={patientAge}
                       gender={selectedPatient.gender}
-                      patientId={selectedPatient.id}
                       imc={imcGlobal}
                       setFraminghamObs={setFraminghamObs}
                     />

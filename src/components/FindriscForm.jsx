@@ -6,7 +6,6 @@ import { buildWaistObservation } from "../fhir/buildWaistObservation";
 function FindriscForm({
   age,
   gender,
-  patientId,
   setImcGlobal,
   setImcObs,
   setFindriscObs,
@@ -156,7 +155,6 @@ function FindriscForm({
 
     const riesgo = clasificarRiesgo(puntos);
     const findriscObservation = buildFindriscObservation(
-      patientId,
       puntos,
       riesgo.nivel,
       riesgo.riesgoEstimado,
@@ -164,13 +162,12 @@ function FindriscForm({
 
     const imcClasificacion = clasificarIMC(imcValue);
     const imcObservation = buildIMCObservation(
-      patientId,
       imcValue,
       imcClasificacion.nivel,
     );
 
     const perimetro = parseFloat(formData.perimetro);
-    const waistObservation = buildWaistObservation(patientId, perimetro);
+    const waistObservation = buildWaistObservation(perimetro);
 
     setFindriscObs(findriscObservation);
     setImcObs(imcObservation);
