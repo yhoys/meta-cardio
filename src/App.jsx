@@ -470,24 +470,36 @@ function App() {
                         {sendResult.ok ? (
                           <>
                             <p>
-                              Envío existoso al servidor FHIR (HTTP{""}{" "}
-                              {sendResult.status}).
+                              <strong>Envío existoso</strong> al servidor FHIR
+                              (HTTP {sendResult.status}).
                             </p>
                             {sendResult.links?.length > 0 && (
                               <>
                                 <p>Recursos creados/actualizados:</p>
-                                <ul>
-                                  {sendResult.links.map((url) => (
-                                    <li key={url}>
-                                      <a
-                                        href={url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                      >
-                                        {url}
-                                      </a>
-                                    </li>
-                                  ))}
+                                <ul className="fhir-links-list">
+                                  {sendResult.links.map((url) => {
+                                    const cleanUrl = url.replace(
+                                      /\/_history\/\d+$/,
+                                      "",
+                                    );
+                                    const parts = cleanUrl.split("/");
+                                    const resourceType =
+                                      parts[parts.length - 2];
+                                    const id = parts[parts.length - 1];
+
+                                    return (
+                                      <li key={url}>
+                                        <strong>{resourceType}</strong> ({id}){" "}
+                                        <a
+                                          href={cleanUrl}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                        >
+                                          abrir
+                                        </a>
+                                      </li>
+                                    );
+                                  })}
                                 </ul>
                               </>
                             )}
@@ -495,7 +507,7 @@ function App() {
                         ) : (
                           <>
                             <p>
-                              Falló el envío al servidor FHIR (HTTP{""}
+                              Falló el envío al servidor FHIR (HTTP{" "}
                               {sendResult.status}).
                             </p>
                             {sendResult.errorText && (

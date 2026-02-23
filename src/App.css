@@ -544,3 +544,13 @@ label {
   flex-wrap: wrap;
   align-items: center;
 }
+
+.fhir-links-list {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.85rem;
+}
+
+.fhir-links-list li {
+  margin-bottom: 0.15rem;
+}
