@@ -412,33 +412,36 @@ function App() {
                 {/*Documento FHIR*/}
                 {activeStep === "reporte" && (
                   <>
-                    {allObservationsReady &&
-                      (!compositionJson || isCompositionStale) && (
-                        <button
-                          type="button"
-                          className="primary-button"
-                          onClick={handleGenerateComposition}
-                          disabled={isGenerating}
-                        >
-                          {isGenerating
-                            ? "Generando documento FHIR..."
-                            : isCompositionStale
-                              ? "Regenerar documento clínico (FHIR Composition)"
-                              : "Generar documento clínico (FHIR Composition)"}
-                        </button>
-                      )}
+                    {allObservationsReady && (
+                      <div className="fhir-actions-row">
+                        {(!compositionJson || isCompositionStale) && (
+                          <button
+                            type="button"
+                            className="primary-button"
+                            onClick={handleGenerateComposition}
+                            disabled={isGenerating}
+                          >
+                            {isGenerating
+                              ? "Generando documento FHIR..."
+                              : isCompositionStale
+                                ? "Regenerar documento clínico (FHIR Composition)"
+                                : "Generar documento clínico (FHIR Composition)"}
+                          </button>
+                        )}
 
-                    {compositionJson && (
-                      <button
-                        type="button"
-                        className="primary-button"
-                        onClick={handleSendToFhir}
-                        disabled={sending}
-                      >
-                        {sending
-                          ? "Enviando Bundle a FHIR..."
-                          : "Enviar a servidor FHIR (Bundle transaction)"}
-                      </button>
+                        {compositionJson && !isCompositionStale && (
+                          <button
+                            type="button"
+                            className="primary-button"
+                            onClick={handleSendToFhir}
+                            disabled={sending}
+                          >
+                            {sending
+                              ? "Enviando Bundle a FHIR..."
+                              : "Enviar a servidor FHIR (Bundle transaction)"}
+                          </button>
+                        )}
+                      </div>
                     )}
 
                     {!allObservationsReady && (

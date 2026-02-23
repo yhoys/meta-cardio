@@ -535,3 +535,12 @@ label {
     flex-direction: column;
   }
 }
+
+.fhir-actions-row {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
