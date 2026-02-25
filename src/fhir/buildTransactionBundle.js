@@ -1,11 +1,12 @@
-// src/fhir/buildTransactionBundle.js
 import { buildComposition } from "./buildComposition";
 
 export function buildTransactionBundle({ patient, device, observations }) {
   const patientFullUrl = "urn:uuid:patient-1";
   const deviceFullUrl = "urn:uuid:device-1";
 
-  const { id: ID_UNUSED, ...patientWithoutId } = patient;
+  const { id: _id, ...patientWithoutId } = patient;
+
+  const obsFullUrls = observations.map((_obs, i) => `urn:uuid:obs-${i + 1}`);
 
   const observationsWithRefs = observations.map((obs) => ({
     ...obs,
@@ -13,24 +14,15 @@ export function buildTransactionBundle({ patient, device, observations }) {
     device: { reference: deviceFullUrl },
   }));
 
-  const obsFullUrls = observationsWithRefs.map(
-    (_obs, i) => `urn:uuid:obs-${i + 1}`,
-  );
-
-  const [imcRef, findriscRef, framinghamRef, waistRef] = obsFullUrls;
+  const [imcRef, findRiscRef, framinghamRef, waistRef] = obsFullUrls;
 
   const composition = buildComposition(
     patientFullUrl,
-    findriscRef,
+    findRiscRef,
     imcRef,
     framinghamRef,
     waistRef,
   );
-
-  const compositionWithRefs = {
-    ...composition,
-    subject: { reference: patientFullUrl },
-  };
 
   return {
     resourceType: "Bundle",
@@ -39,34 +31,22 @@ export function buildTransactionBundle({ patient, device, observations }) {
       {
         fullUrl: patientFullUrl,
         resource: patientWithoutId,
-        request: {
-          method: "POST",
-          url: "Patient",
-        },
+        request: { method: "POST", url: "Patient" },
       },
       {
         fullUrl: deviceFullUrl,
         resource: device,
-        request: {
-          method: "PUT",
-          url: "Device/meta-cardio-app",
-        },
+        request: { method: "PUT", url: "Device/meta-cardio-app" },
       },
       ...observationsWithRefs.map((obs, i) => ({
         fullUrl: obsFullUrls[i],
         resource: obs,
-        request: {
-          method: "POST",
-          url: "Observation",
-        },
+        request: { method: "POST", url: "Observation" },
       })),
       {
         fullUrl: "urn:uuid:composition-1",
-        resource: compositionWithRefs,
-        request: {
-          method: "POST",
-          url: "Composition",
-        },
+        resource: composition,
+        request: { method: "POST", url: "Composition" },
       },
     ],
   };

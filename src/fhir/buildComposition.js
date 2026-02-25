@@ -7,7 +7,6 @@ export function buildComposition(
 ) {
   return {
     resourceType: "Composition",
-    id: `meta-cardio-${Date.now()}`,
     status: "final",
 
     category: [
@@ -41,7 +40,7 @@ export function buildComposition(
 
     author: [
       {
-        reference: "Device/meta-cardio-app",
+        reference: "urn:uuid:device-1",
         display: "Meta Cardio App",
       },
     ],

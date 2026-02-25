@@ -3,6 +3,86 @@ import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 import { buildIMCObservation } from "../fhir/buildIMCObservation";
 import { buildWaistObservation } from "../fhir/buildWaistObservation";
 
+function calcularIMC(peso, tallaCm) {
+  if (!peso || !tallaCm || tallaCm <= 0) return null;
+  const tallaM = tallaCm / 100;
+  return peso / (tallaM * tallaM);
+}
+
+function clasificarIMC(imc) {
+  if (imc < 18.5) return { nivel: "Bajo peso", color: "#3b82f6" };
+  if (imc < 25) return { nivel: "Normal", color: "#16a34a" };
+  if (imc < 30) return { nivel: "Sobrepeso", color: "#f97316" };
+  return { nivel: "Obesidad", color: "#dc2626" };
+}
+
+function calcularPuntosFindrisc(formData, imc, age, gender) {
+  let puntos = 0;
+
+  // Edad
+  if (age < 45) puntos += 0;
+  else if (age <= 54) puntos += 2;
+  else if (age <= 64) puntos += 3;
+  else puntos += 4;
+
+  // IMC
+  if (imc !== null) {
+    if (imc < 25) puntos += 0;
+    else if (imc < 30) puntos += 1;
+    else puntos += 3;
+  }
+
+  // Perímetro abdominal
+  const perimetro = parseFloat(formData.perimetro);
+  if (!isNaN(perimetro)) {
+    if (gender === "male") {
+      if (perimetro < 94) puntos += 0;
+      else if (perimetro <= 102) puntos += 3;
+      else puntos += 4;
+    } else if (gender === "female") {
+      if (perimetro < 80) puntos += 0;
+      else if (perimetro <= 88) puntos += 3;
+      else puntos += 4;
+    }
+  }
+
+  if (formData.actividadFisica === "no") puntos += 2;
+  if (formData.frutasVerduras === "no") puntos += 1;
+  if (formData.antihipertensivos === "sí") puntos += 2;
+  if (formData.glucosaAlta === "sí") puntos += 5;
+  if (formData.antecedentes === "segundoGrado") puntos += 3;
+  if (formData.antecedentes === "primerGrado") puntos += 5;
+
+  return puntos;
+}
+
+function clasificarRiesgo(puntos) {
+  if (puntos < 7)
+    return { nivel: "Bajo", riesgoEstimado: "1%", color: "#16a34a" };
+  if (puntos <= 11)
+    return {
+      nivel: "Ligeramente elevado",
+      riesgoEstimado: "4%",
+      color: "#eab308",
+    };
+  if (puntos <= 14)
+    return { nivel: "Moderado", riesgoEstimado: "17%", color: "#f97316" };
+  if (puntos <= 20)
+    return { nivel: "Alto", riesgoEstimado: "33%", color: "#dc2626" };
+  return { nivel: "Muy alto", riesgoEstimado: "50%", color: "#7f1d1d" };
+}
+
+const MENSAJES_RIESGO = {
+  Bajo: "Riesgo reducido de desarrollar diabetes tipo 2 en los próximos 10 años.",
+  "Ligeramente elevado":
+    "Existe un riesgo leve. Se recomienda mantener hábitos saludables.",
+  Moderado:
+    "Riesgo intermedio. Se recomienda evaluación médica y cambios en estilo de vida.",
+  Alto: "Alto riesgo. Se recomienda evaluación clínica y control metabólico.",
+  "Muy alto":
+    "Riesgo muy elevado. Se recomienda intervención médica inmediata.",
+};
+
 function FindriscForm({
   age,
   gender,
@@ -23,120 +103,28 @@ function FindriscForm({
   });
 
   const [resultado, setResultado] = useState(null);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setError("");
   };
 
-  const calcularIMC = () => {
-    const peso = parseFloat(formData.peso);
-    const tallaCm = parseFloat(formData.talla);
-
-    if (!isNaN(peso) && !isNaN(tallaCm) && tallaCm > 0) {
-      const tallaM = tallaCm / 100; // Convertir cm a metros
-      return peso / (tallaM * tallaM);
-    }
-    return null;
-  };
-
-  const clasificarIMC = (imc) => {
-    if (imc < 18.5) {
-      return { nivel: "Bajo peso", color: "#3b82f6" };
-    }
-    if (imc < 25) {
-      return { nivel: "Normal", color: "#16a34a" };
-    }
-    if (imc < 30) {
-      return { nivel: "Sobrepeso", color: "#f97316" };
-    }
-    return { nivel: "Obesidad", color: "#dc2626" };
-  };
-
-  const calcularFindrisc = () => {
-    let puntos = 0;
-
-    // Edad
-    if (age < 45) puntos += 0;
-    else if (age <= 54) puntos += 2;
-    else if (age <= 64) puntos += 3;
-    else puntos += 4;
-
-    // IMC
-    const imc = calcularIMC();
-    if (!isNaN(imc)) {
-      if (imc < 25) puntos += 0;
-      else if (imc < 30) puntos += 1;
-      else puntos += 3;
-    }
-
-    // Perímetro
-    const perimetro = parseFloat(formData.perimetro);
-    if (!isNaN(perimetro)) {
-      if (gender === "male") {
-        if (perimetro < 94) puntos += 0;
-        else if (perimetro <= 102) puntos += 3;
-        else puntos += 4;
-      } else if (gender === "female") {
-        if (perimetro < 80) puntos += 0;
-        else if (perimetro <= 88) puntos += 3;
-        else puntos += 4;
-      }
-    }
-
-    // Actividad física
-    if (formData.actividadFisica === "no") puntos += 2;
-
-    // Frutas y verduras
-    if (formData.frutasVerduras === "no") puntos += 1;
-
-    // Antihipertensivos
-    if (formData.antihipertensivos === "sí") puntos += 2;
-
-    // Glucosa
-    if (formData.glucosaAlta === "sí") puntos += 5;
-
-    // Antecedentes familiares
-    if (formData.antecedentes === "segundoGrado") puntos += 3;
-    else if (formData.antecedentes === "primerGrado") puntos += 5;
-
-    return puntos;
-  };
-
-  const clasificarRiesgo = (puntos) => {
-    if (puntos < 7) {
-      return { nivel: "Bajo", riesgoEstimado: "1%", color: "#16a34a" };
-    }
-    if (puntos <= 11) {
-      return {
-        nivel: "Ligeramente elevado",
-        riesgoEstimado: "4%",
-        color: "#eab308",
-      };
-    }
-    if (puntos <= 14) {
-      return { nivel: "Moderado", riesgoEstimado: "17%", color: "#f97316" };
-    }
-    if (puntos <= 20) {
-      return { nivel: "Alto", riesgoEstimado: "33%", color: "#dc2626" };
-    }
-    return { nivel: "Muy alto", riesgoEstimado: "50%", color: "#7f1d1d" };
-  };
+  const imcActual = calcularIMC(
+    parseFloat(formData.peso),
+    parseFloat(formData.talla),
+  );
+  const imcInfo = imcActual ? clasificarIMC(imcActual) : null;
 
   const handleCalcular = () => {
-    const imcValue = calcularIMC();
-    if (!imcValue) {
-      alert("Debe ingresar peso y talla válidos.");
+    if (!imcActual) {
+      setError("Debe ingresar peso y talla válidos.");
       return;
     }
-
     if (!formData.perimetro) {
-      alert("Debe ingresar un perímetro abdominal.");
+      setError("Debe ingresar un perímetro abdominal.");
       return;
     }
-
     if (
       !formData.actividadFisica ||
       !formData.frutasVerduras ||
@@ -144,38 +132,23 @@ function FindriscForm({
       !formData.glucosaAlta ||
       !formData.antecedentes
     ) {
-      alert("Complete todas las preguntas del FINDRISC.");
+      setError("Complete todas las preguntas del FINDRISC.");
       return;
     }
 
-    setImcGlobal(imcValue);
+    setError("");
+    setImcGlobal(imcActual);
 
-    const puntos = calcularFindrisc();
-    setResultado(puntos);
-
+    const puntos = calcularPuntosFindrisc(formData, imcActual, age, gender);
     const riesgo = clasificarRiesgo(puntos);
-    const findriscObservation = buildFindriscObservation(
-      puntos,
-      riesgo.nivel,
-      riesgo.riesgoEstimado,
+
+    setFindriscObs(
+      buildFindriscObservation(puntos, riesgo.nivel, riesgo.riesgoEstimado),
     );
-
-    const imcClasificacion = clasificarIMC(imcValue);
-    const imcObservation = buildIMCObservation(
-      imcValue,
-      imcClasificacion.nivel,
-    );
-
-    const perimetro = parseFloat(formData.perimetro);
-    const waistObservation = buildWaistObservation(perimetro);
-
-    setFindriscObs(findriscObservation);
-    setImcObs(imcObservation);
-    setWaistObs(waistObservation);
+    setImcObs(buildIMCObservation(imcActual, clasificarIMC(imcActual).nivel));
+    setWaistObs(buildWaistObservation(parseFloat(formData.perimetro)));
+    setResultado(puntos);
   };
-
-  const imcActual = calcularIMC();
-  const imcInfo = imcActual ? clasificarIMC(imcActual) : null;
 
   return (
     <div className="section-card">
@@ -204,7 +177,7 @@ function FindriscForm({
           <input
             type="number"
             name="talla"
-            value={formData.talla || ""}
+            value={formData.talla}
             onChange={handleChange}
           />
         </div>
@@ -214,7 +187,7 @@ function FindriscForm({
           <input
             type="number"
             name="perimetro"
-            value={formData.perimetro || ""}
+            value={formData.perimetro}
             onChange={handleChange}
           />
         </div>
@@ -232,7 +205,6 @@ function FindriscForm({
               />
               Sí
             </label>
-
             <label className="radio-option">
               <input
                 type="radio"
@@ -259,7 +231,6 @@ function FindriscForm({
               />
               Sí
             </label>
-
             <label className="radio-option">
               <input
                 type="radio"
@@ -286,7 +257,6 @@ function FindriscForm({
               />
               Sí
             </label>
-
             <label className="radio-option">
               <input
                 type="radio"
@@ -313,7 +283,6 @@ function FindriscForm({
               />
               Sí
             </label>
-
             <label className="radio-option">
               <input
                 type="radio"
@@ -351,6 +320,18 @@ function FindriscForm({
         </div>
       )}
 
+      {error && (
+        <p
+          style={{
+            color: "#dc2626",
+            marginBottom: "0.75rem",
+            fontSize: "0.875rem",
+          }}
+        >
+          {error}
+        </p>
+      )}
+
       <button className="primary-button" onClick={handleCalcular}>
         Calcular riesgo FINDRISC
       </button>
@@ -358,29 +339,13 @@ function FindriscForm({
       {resultado !== null &&
         (() => {
           const riesgo = clasificarRiesgo(resultado);
-
           return (
             <div
               className="result-card"
               style={{ borderLeftColor: riesgo.color }}
             >
               <h4 style={{ color: riesgo.color }}>Riesgo: {riesgo.nivel}</h4>
-              <p>
-                {riesgo.nivel === "Bajo" &&
-                  "Riesgo reducido de desarrollar diabetes tipo 2 en los próximos 10 años."}
-
-                {riesgo.nivel === "Ligeramente elevado" &&
-                  "Existe un riesgo leve. Se recomienda mantener hábitos saludables."}
-
-                {riesgo.nivel === "Moderado" &&
-                  "Riesgo intermedio. Se recomienda evaluación médica y cambios en estilo de vida."}
-
-                {riesgo.nivel === "Alto" &&
-                  "Alto riesgo. Se recomienda evaluación clínica y control metabólico."}
-
-                {riesgo.nivel === "Muy alto" &&
-                  "Riesgo muy elevado. Se recomienda intervención médica inmediata."}
-              </p>
+              <p>{MENSAJES_RIESGO[riesgo.nivel]}</p>
               <strong>Riesgo estimado a 10 años:</strong>{" "}
               {riesgo.riesgoEstimado}
             </div>
