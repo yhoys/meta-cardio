@@ -6,7 +6,6 @@ export function buildFraminghamObservation(
 ) {
   return {
     resourceType: "Observation",
-    id: `framingham-${Date.now()}`,
     status: "final",
 
     category: [

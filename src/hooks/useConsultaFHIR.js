@@ -26,10 +26,10 @@ export function useConsultaFHIR() {
 
   const allObservationsReady = useMemo(
     () =>
-      !!observations.imc &&
-      !!observations.findrisc &&
-      !!observations.framingham &&
-      !!observations.waist &&
+      observations.imc !== null &&
+      observations.findrisc !== null &&
+      observations.framingham !== null &&
+      observations.waist !== null &&
       patientAge !== null,
     [observations, patientAge],
   );
@@ -114,9 +114,19 @@ export function useConsultaFHIR() {
         let errorText = `Error HTTP ${status}`;
         if (body?.resourceType === "OperationOutcome" && body.issue?.length) {
           errorText = body.issue
-            .map((i) => i.diagnostics || i.details?.text)
-            .filter(Boolean)
-            .join(" | ");
+            .map((issue, i) => {
+              const detalle =
+                issue.diagnostics ||
+                issue.details?.text ||
+                issue.code ||
+                "Error desconocido";
+              const ubicacion = issue.location?.length
+                ? ` [${issue.location.join(", ")}]`
+                : "";
+              const severidad = issue.severity ? `[${issue.severity}]` : "";
+              return `${i + 1}. ${severidad}${detalle}${ubicacion}`;
+            })
+            .join("\n");
         }
         dispatch({
           type: "SEND_FHIR_ERROR",

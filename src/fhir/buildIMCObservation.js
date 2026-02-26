@@ -4,7 +4,6 @@ export function buildIMCObservation(imcValue, classification) {
 
   return {
     resourceType: "Observation",
-    id: `imc-${Date.now()}`,
     status: "final",
 
     category: [

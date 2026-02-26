@@ -3,6 +3,22 @@ import { buildFindriscObservation } from "../fhir/buildFindriscObservation";
 import { buildIMCObservation } from "../fhir/buildIMCObservation";
 import { buildWaistObservation } from "../fhir/buildWaistObservation";
 
+const RANGOS = {
+  peso: { min: 10, max: 300, label: "Peso (kg)" },
+  talla: { min: 50, max: 250, label: "Talla (cm)" },
+  perimetro: { min: 40, max: 200, label: "Perímetro abdominal (cm)" },
+};
+
+function validarRango(nombre, rawStr, valor) {
+  const r = RANGOS[nombre];
+  if (!rawStr || rawStr.trim() === "") return `${r.label} es obligatorio.`;
+  if (!Number.isFinite(valor) || valor <= 0)
+    return `${r.label} debe ser un número positivo.`;
+  if (valor < r.min || valor > r.max)
+    return `${r.label} debe estar entre ${r.min} y ${r.max}.`;
+  return null;
+}
+
 function calcularIMC(peso, tallaCm) {
   if (!peso || !tallaCm || tallaCm <= 0) return null;
   const tallaM = tallaCm / 100;
@@ -117,14 +133,31 @@ function FindriscForm({
   const imcInfo = imcActual ? clasificarIMC(imcActual) : null;
 
   const handleCalcular = () => {
-    if (!imcActual) {
-      setError("Debe ingresar peso y talla válidos.");
+    const peso = parseFloat(formData.peso);
+    const talla = parseFloat(formData.talla);
+    const perimetro = parseFloat(formData.perimetro);
+
+    const errorPeso = validarRango("peso", formData.peso, peso);
+    const errorTalla = validarRango("talla", formData.talla, talla);
+    const errorPerimetro = validarRango(
+      "perimetro",
+      formData.perimetro,
+      perimetro,
+    );
+
+    if (errorPeso) {
+      setError(errorPeso);
       return;
     }
-    if (!formData.perimetro) {
-      setError("Debe ingresar un perímetro abdominal.");
+    if (errorTalla) {
+      setError(errorTalla);
       return;
     }
+    if (errorPerimetro) {
+      setError(errorPerimetro);
+      return;
+    }
+
     if (
       !formData.actividadFisica ||
       !formData.frutasVerduras ||
@@ -133,6 +166,11 @@ function FindriscForm({
       !formData.antecedentes
     ) {
       setError("Complete todas las preguntas del FINDRISC.");
+      return;
+    }
+
+    if (!Number.isFinite(imcActual) || imcActual <= 0) {
+      setError("Error en el cálculo del IMC. Revise peso y talla.");
       return;
     }
 
@@ -167,6 +205,8 @@ function FindriscForm({
           <input
             type="number"
             name="peso"
+            min="10"
+            max="300"
             value={formData.peso || ""}
             onChange={handleChange}
           />
@@ -177,6 +217,8 @@ function FindriscForm({
           <input
             type="number"
             name="talla"
+            min="50"
+            max="250"
             value={formData.talla}
             onChange={handleChange}
           />
@@ -187,6 +229,8 @@ function FindriscForm({
           <input
             type="number"
             name="perimetro"
+            min="40"
+            max="200"
             value={formData.perimetro}
             onChange={handleChange}
           />

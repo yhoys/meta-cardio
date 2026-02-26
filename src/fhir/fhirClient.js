@@ -1,4 +1,7 @@
-const FHIR_BASE = "http://fhirserver.hl7fundamentals.org/fhir";
+const FHIR_BASE = (
+  import.meta.env.VITE_FHIR_BASE_URL ??
+  "https://fhirserver.hl7fundamentals.org/fhir"
+).replace(/\/$/, "");
 
 export async function sendTransactionBundle(bundle) {
   const response = await fetch(FHIR_BASE, {

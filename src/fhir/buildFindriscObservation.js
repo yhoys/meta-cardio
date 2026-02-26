@@ -10,7 +10,6 @@ export function buildFindriscObservation(
 
   return {
     resourceType: "Observation",
-    id: `findrisc-${Date.now()}`,
     status: "final",
 
     category: [

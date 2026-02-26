@@ -129,7 +129,18 @@ function SendResult({ sendResult }) {
       ) : (
         <>
           <p>Falló el envío al servidor FHIR (HTTP {sendResult.status}).</p>
-          {sendResult.errorText && <p>Detalle: {sendResult.errorText}</p>}
+          {sendResult.errorText && (
+            <pre
+              style={{
+                margin: 0,
+                fontSize: "0.82rem",
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {sendResult.errorText}
+            </pre>
+          )}
         </>
       )}
     </div>

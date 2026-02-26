@@ -5,6 +5,23 @@ const isMale = (g) => g === "male" || g === "M" || g === "masculino";
 const isFemale = (g) => g === "female" || g === "F" || g === "femenino";
 const esSi = (v) => v === "si" || v === "sí";
 
+const RANGOS_FRAMINGHAM = {
+  pas: { min: 70, max: 250, label: "Presión arterial sistólica (mmHg)" },
+  colesterolTotal: { min: 100, max: 600, label: "Colesterol total (mg/dL)" },
+  hdl: { min: 10, max: 150, label: "HDL (mg/dL)" },
+};
+
+function validarRangoF(nombre, rawStr, valor) {
+  const r = RANGOS_FRAMINGHAM[nombre];
+  if (!r) return null;
+  if (!rawStr || rawStr.trim() === "") return `${r.label} es obligatorio.`;
+  if (!Number.isFinite(valor) || valor <= 0)
+    return `${r.label} debe ser un número positivo.`;
+  if (valor < r.min || valor > r.max)
+    return `${r.label} debe estar entre ${r.min} y ${r.max}.`;
+  return null;
+}
+
 function calcularModeloLipidico({
   colesterol,
   hdl,
@@ -125,8 +142,9 @@ function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
     }
 
     const pas = parseFloat(formData.pas);
-    if (!pas || pas <= 0) {
-      setError("Ingrese una presión arterial sistólica válida.");
+    const errorPas = validarRangoF("pas", formData.pas, pas);
+    if (errorPas) {
+      setError(errorPas);
       return;
     }
 
@@ -135,10 +153,18 @@ function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
     if (usaLaboratorio === "si") {
       const colesterol = parseFloat(formData.colesterolTotal);
       const hdl = parseFloat(formData.hdl);
-      if (!colesterol || colesterol <= 0 || !hdl || hdl <= 0) {
-        setError(
-          "Debe ingresar colesterol total, HDL y presión arterial sistólica válidos.",
-        );
+      const errorCol = validarRangoF(
+        "colesterolTotal",
+        formData.colesterolTotal,
+        colesterol,
+      );
+      const errorHdl = validarRangoF("hdl", formData.hdl, hdl);
+      if (errorCol) {
+        setError(errorCol);
+        return;
+      }
+      if (errorHdl) {
+        setError(errorHdl);
         return;
       }
       riesgoOriginal = calcularModeloLipidico({
@@ -234,6 +260,8 @@ function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
               <input
                 type="number"
                 name="colesterolTotal"
+                min="100"
+                max="600"
                 value={formData.colesterolTotal}
                 onChange={handleChange}
               />
@@ -243,6 +271,8 @@ function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
               <input
                 type="number"
                 name="hdl"
+                min="10"
+                max="100"
                 value={formData.hdl}
                 onChange={handleChange}
               />
@@ -255,6 +285,8 @@ function FraminghamForm({ age, gender, imc, setFraminghamObs }) {
           <input
             type="number"
             name="pas"
+            min="70"
+            max="250"
             value={formData.pas}
             onChange={handleChange}
           />

@@ -1,7 +1,6 @@
 export function buildWaistObservation(waistCm) {
   return {
     resourceType: "Observation",
-    id: `waist-${Date.now()}`,
     status: "final",
 
     category: [
