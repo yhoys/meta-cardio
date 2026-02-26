@@ -297,19 +297,28 @@ function ReferencesSection() {
       <ul className="refs-biblio-list">
         <li>
           Lindström J, Tuomilehto J. The Diabetes Risk Score: a practical tool
-          to predict type 2 diabetes. Diabetes Care.
+          to predict type 2 diabetes. Diabetes Care. 2003;26(3):725-31.
         </li>
         <li>
-          D&apos;Agostino RB et al. General cardiovascular risk profile for use
-          in primary care. Circulation, 2008.
+          D&apos;Agostino RB Sr, Vasan RS, Pencina MJ, Wolf PA, Cobain M,
+          Massaro JM, et al. General cardiovascular risk profile for use in
+          primary care: the Framingham Heart Study. Circulation.
+          2008;117(6):743-53.
         </li>
         <li>
-          Wilson PWF et al. Prediction of coronary heart disease using risk
-          factor categories. Circulation, 1998.
+          Wilson PWF, D&apos;Agostino RB, Levy D, Belanger AM, Silbershatz H,
+          Kannel WB. Prediction of coronary heart disease using risk factor
+          categories. Circulation. 1998;97(18):1837-47.
+        </li>
+        <li>
+          Muñoz OM, Rodríguez NI, Ruiz Á, Rondón M. Validación de los modelos de
+          predicción de Framingham y PROCAM como estimadores del riesgo
+          cardiovascular en una población colombiana. Rev Colomb Cardiol.
+          2014;21(4):202-12. doi:10.1016/j.rccar.2014.02.001.
         </li>
         <li>
           Guías y documentos nacionales adicionales para riesgo cardiovascular y
-          DM2.
+          diabetes mellitus tipo 2 (DM2).
         </li>
       </ul>
     </div>

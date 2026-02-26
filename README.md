@@ -213,3 +213,4 @@ Servidor FHIR de práctica proporcionado por [HL7 Fundamentals](http://fhirserve
 - Lindström J, Tuomilehto J. _The Diabetes Risk Score: a practical tool to predict type 2 diabetes._ Diabetes Care, 2003.
 - D'Agostino RB et al. _General cardiovascular risk profile for use in primary care._ Circulation, 2008.
 - Wilson PWF et al. _Prediction of coronary heart disease using risk factor categories._ Circulation, 1998.
+- Muñoz OM, Rodríguez NI, Ruiz Á, Rondón M. _Validación de los modelos de predicción de Framingham y PROCAM como estimadores del riesgo cardiovascular en una población colombiana._ Revista Colombiana de Cardiología, Vol. 21, Issue 4, 2014, pp. 202-212. https://doi.org/10.1016/j.rccar.2014.02.001
