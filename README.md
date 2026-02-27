@@ -19,14 +19,17 @@ Los resultados se codifican como recursos **FHIR R4** (`Observation`, `Compositi
 
 ## Tecnologías utilizadas
 
-| Tecnología                          | Uso                                    |
-| ----------------------------------- | -------------------------------------- |
-| React 18                            | Interfaz de usuario                    |
-| Vite                                | Bundler y entorno de desarrollo        |
-| `useReducer` + hooks personalizados | Manejo de estado centralizado          |
-| FHIR R4                             | Estándar de interoperabilidad en salud |
-| HL7 Fundamentals FHIR Server        | Servidor de práctica para persistencia |
-| React Icons                         | Iconografía                            |
+| Tecnología                          | Uso                                                                              |
+| ----------------------------------- | -------------------------------------------------------------------------------- |
+| React 18                            | Interfaz de usuario                                                              |
+| Vite                                | Bundler y entorno de desarrollo                                                  |
+| `useReducer` + hooks personalizados | Manejo de estado centralizado                                                    |
+| FHIR R4                             | Estándar de interoperabilidad en salud                                           |
+| SNOMED CT                           | Vocabulario controlado clínico (códigos de observación, método e interpretación) |
+| LOINC                               | Identificación de observaciones clínicas (secundario a SNOMED CT)                |
+| UCUM                                | Unidades de medida estandarizadas (kg/m², cm, %)                                 |
+| HL7 Fundamentals FHIR Server        | Servidor de práctica para persistencia                                           |
+| React Icons                         | Iconografía                                                                      |
 
 ---
 
@@ -45,10 +48,10 @@ META-CARDIO/
 │   │   └── PatientSelector.jsx    — Selector de paciente
 │   │
 │   ├── fhir/                # Capa FHIR — construcción de recursos
-│   │   ├── buildFindriscObservation.js   — Observation LOINC 97064-0
-│   │   ├── buildIMCObservation.js        — Observation LOINC 39156-5
-│   │   ├── buildWaistObservation.js      — Observation LOINC 56115-9
-│   │   ├── buildFraminghamObservation.js — Observation LOINC 65853-4
+│   │   ├── buildFindriscObservation.js   — Observation LOINC 97064-0 · SNOMED 450321004
+│   │   ├── buildIMCObservation.js        — Observation LOINC 39156-5 · SNOMED 60621009
+│   │   ├── buildWaistObservation.js      — Observation LOINC 56115-9 · SNOMED 276361009
+│   │   ├── buildFraminghamObservation.js — Observation LOINC 65853-4 · SNOMED 450759008
 │   │   ├── buildComposition.js           — Composition clínica LOINC 83539-7
 │   │   ├── buildTransactionBundle.js     — Bundle transaction con urn:uuid
 │   │   └── fhirClient.js                 — Cliente HTTP hacia el servidor FHIR
@@ -107,15 +110,26 @@ En cualquier momento se puede reiniciar la consulta con el botón ↺.
 
 ### Recursos generados por consulta
 
-| Recurso       | Código LOINC | Descripción                                  |
-| ------------- | ------------ | -------------------------------------------- |
-| `Observation` | 97064-0      | Puntaje total FINDRISC                       |
-| `Observation` | 39156-5      | Índice de Masa Corporal (IMC)                |
-| `Observation` | 56115-9      | Perímetro abdominal                          |
-| `Observation` | 65853-4      | Riesgo cardiovascular Framingham             |
-| `Composition` | 83539-7      | Documento clínico de evaluación              |
-| `Patient`     | —            | Paciente (sin ID local, el servidor asigna)  |
-| `Device`      | —            | Dispositivo autor (`Device/meta-cardio-app`) |
+| Recurso       | Código SNOMED CT                         | Código LOINC | Descripción                                 |
+| ------------- | ---------------------------------------- | ------------ | ------------------------------------------- |
+| `Observation` | 450321004 — Finnish diabetes risk score  | 97064-0      | Puntaje total FINDRISC                      |
+| `Observation` | 60621009 — Body mass index               | 39156-5      | Índice de Masa Corporal (IMC)               |
+| `Observation` | 276361009 — Waist circumference          | 56115-9      | Perímetro abdominal                         |
+| `Observation` | 450759008 — Framingham risk score        | 65853-4      | Riesgo cardiovascular Framingham            |
+| `Composition` | —                                        | 83539-7      | Documento clínico de evaluación             |
+| `Patient`     | —                                        | —            | Paciente (sin ID local, el servidor asigna) |
+| `Device`      | 706689003 — Application program software | —            | Dispositivo autor                           |
+
+La interpretación clínica de cada `Observation` también utiliza SNOMED CT:
+
+| Observación | Interpretación              | Código SNOMED CT               |
+| ----------- | --------------------------- | ------------------------------ |
+| IMC         | Bajo peso                   | 248342006 — Underweight        |
+| IMC         | Normal                      | 43664005 — Normal body weight  |
+| IMC         | Sobrepeso                   | 238131007 — Overweight         |
+| IMC         | Obesidad (IMC 30–39.9)      | 162864005 — Obesity            |
+| IMC         | Obesidad mórbida (IMC ≥ 40) | 238136002 — Morbid obesity     |
+| Waist       | Sitio anatómico             | 62413002 — Abdominal structure |
 
 ### Bundle transaction
 
