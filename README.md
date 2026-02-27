@@ -165,15 +165,15 @@ npm run build
 
 ### Variables de entorno
 
-| Variable         | Descripción                | Valor por defecto                             |
-| ---------------- | -------------------------- | --------------------------------------------- |
-| `VITE_FHIR_BASE` | URL base del servidor FHIR | `https://fhirserver.hl7fundamentals.org/fhir` |
+| Variable             | Descripción                | Valor por defecto                             |
+| -------------------- | -------------------------- | --------------------------------------------- |
+| `VITE_FHIR_BASE_URL` | URL base del servidor FHIR | `https://fhirserver.hl7fundamentals.org/fhir` |
 
-Si no se define `VITE_FHIR_BASE`, la aplicación usa el servidor de práctica de HL7 Fundamentals.
+Si no se define `VITE_FHIR_BASE_URL`, la aplicación usa el servidor de práctica de HL7 Fundamentals.
 
 ### Despliegue en Vercel
 
-El proyecto es compatible con Vercel sin configuración adicional. Si se desea usar un servidor FHIR diferente, agregar `VITE_FHIR_BASE` en el panel de Environment Variables de Vercel.
+El proyecto es compatible con Vercel sin configuración adicional. Si se desea usar un servidor FHIR diferente, agregar `VITE_FHIR_BASE_URL` en el panel de Environment Variables de Vercel.
 
 ---
 

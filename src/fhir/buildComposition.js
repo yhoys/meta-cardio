@@ -1,3 +1,32 @@
+const CATEGORY_LOINC = {
+  system: "http://loinc.org",
+  code: "LP183761-8",
+  display: "Report",
+};
+
+const TYPE_LOINC = {
+  system: "http://loinc.org",
+  code: "83539-7",
+  display: "Cardiology Risk assessment and screening note",
+};
+
+const FHIR_PROFILE = "http://hl7.org/fhir/StructureDefinition/Composition";
+
+function generateDiv(text) {
+  return `<div xmlns="http://www.w3.org/1999/xhtml">${text}</div>`;
+}
+
+function buildSection(title, divText, ref) {
+  return {
+    title,
+    text: {
+      status: "generated",
+      div: generateDiv(divText),
+    },
+    entry: [{ reference: ref }],
+  };
+}
+
 export function buildComposition(
   patientRef,
   findriscRef,
@@ -5,36 +34,27 @@ export function buildComposition(
   framinghamRef,
   waistRef,
 ) {
+  if (!patientRef || !findriscRef || !imcRef || !framinghamRef || !waistRef) {
+    throw new Error(
+      "Referencias incompletas: no se puede construir el Composition.",
+    );
+  }
+
   return {
     resourceType: "Composition",
+    meta: {
+      profile: [FHIR_PROFILE],
+    },
     status: "final",
 
-    category: [
-      {
-        coding: [
-          {
-            system: "http://loinc.org",
-            code: "LP183761-8",
-            display: "Report",
-          },
-        ],
-      },
-    ],
+    category: [{ coding: [CATEGORY_LOINC] }],
 
     type: {
-      coding: [
-        {
-          system: "http://loinc.org",
-          code: "83539-7",
-          display: "Cardiology Risk assessment and screening note",
-        },
-      ],
+      coding: [TYPE_LOINC],
       text: "Evaluación de Riesgo Cardiovascular y Metabólico",
     },
 
-    subject: {
-      reference: patientRef,
-    },
+    subject: { reference: patientRef },
 
     date: new Date().toISOString(),
 
@@ -48,54 +68,26 @@ export function buildComposition(
     title: "Informe de Evaluación de Riesgo Cardiovascular y Metabólico",
 
     section: [
-      {
-        title: "Índice de Masa Corporal (IMC)",
-        text: {
-          status: "generated",
-          div: "<div>Índice de masa corporal calculado a partir de peso y talla, clasificado según rangos de IMC.</div>",
-        },
-        entry: [
-          {
-            reference: imcRef,
-          },
-        ],
-      },
-      {
-        title: "Riesgo de Diabetes Tipo 2 (FINDRISC)",
-        text: {
-          status: "generated",
-          div: "<div>Puntaje total de FINDRISC y categoría de riesgo estimado a 10 años para diabetes tipo 2.</div>",
-        },
-        entry: [
-          {
-            reference: findriscRef,
-          },
-        ],
-      },
-      {
-        title: "Riesgo Cardiovascular a 10 años (Framingham Colombia)",
-        text: {
-          status: "generated",
-          div: "<div>Riesgo cardiovascular a 10 años según modelo de Framingham, con riesgo original y riesgo ajustado (factor 0.75 recomendado para Colombia).</div>",
-        },
-        entry: [
-          {
-            reference: framinghamRef,
-          },
-        ],
-      },
-      {
-        title: "Perímetro Abdominal",
-        text: {
-          status: "generated",
-          div: "<div>Perímetro abdominal medido en centímetros, utilizado como indicador de riesgo cardiometabólico.</div>",
-        },
-        entry: [
-          {
-            reference: waistRef,
-          },
-        ],
-      },
+      buildSection(
+        "Índice de Masa Corporal (IMC)",
+        "Índice de masa corporal calculado a partir de peso y talla, clasificado según rangos clínicos establecidos.",
+        imcRef,
+      ),
+      buildSection(
+        "Riesgo de Diabetes Tipo 2 (FINDRISC)",
+        "Puntaje total de FINDRISC y categoría de riesgo estimado a 10 años para diabetes tipo 2.",
+        findriscRef,
+      ),
+      buildSection(
+        "Riesgo Cardiovascular a 10 años (Framingham Colombia)",
+        "Estimación del riesgo cardiovascular a 10 años según modelo de Framingham, incluyendo ajuste recomendado para población colombiana.",
+        framinghamRef,
+      ),
+      buildSection(
+        "Perímetro Abdominal",
+        "Medición del perímetro abdominal en centímetros como indicador de riesgo cardiometabólico.",
+        waistRef,
+      ),
     ],
   };
 }

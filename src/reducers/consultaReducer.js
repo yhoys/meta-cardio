@@ -83,6 +83,13 @@ export function consultaReducer(state, action) {
         sendResult: { ok: true, ...action.payload },
       };
 
+    case "SEND_FHIR_ERROR":
+      return {
+        ...state,
+        sending: false,
+        sendResult: { ok: false, ...action.payload },
+      };
+
     case "SHOW_OBS_MODAL":
       return { ...state, ui: { ...state.ui, showObsModal: true } };
 

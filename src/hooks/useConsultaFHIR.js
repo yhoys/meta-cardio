@@ -140,7 +140,7 @@ export function useConsultaFHIR() {
         links = body.entry
           .map((e) => e.response?.location)
           .filter(Boolean)
-          .map((loc) => `http://fhirserver.hl7fundamentals.org/fhir/${loc}`);
+          .map((loc) => `https://fhirserver.hl7fundamentals.org/fhir/${loc}`);
       }
       dispatch({
         type: "SEND_FHIR_SUCCESS",
