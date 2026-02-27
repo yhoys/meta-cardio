@@ -48,11 +48,11 @@ META-CARDIO/
 │   │   └── PatientSelector.jsx    — Selector de paciente
 │   │
 │   ├── fhir/                # Capa FHIR — construcción de recursos
-│   │   ├── buildFindriscObservation.js   — Observation LOINC 97064-0 · SNOMED 450321004
+│   │   ├── buildFindriscObservation.js   — Observation LOINC 97064-0 · SNOMED 763117005
 │   │   ├── buildIMCObservation.js        — Observation LOINC 39156-5 · SNOMED 60621009
-│   │   ├── buildWaistObservation.js      — Observation LOINC 56115-9 · SNOMED 276361009
+│   │   ├── buildWaistObservation.js      — Observation LOINC 8280-0 · SNOMED 276361009
 │   │   ├── buildFraminghamObservation.js — Observation LOINC 65853-4 · SNOMED 450759008
-│   │   ├── buildComposition.js           — Composition clínica LOINC 83539-7
+│   │   ├── buildComposition.js           — Composition clínica LOINC 75492-9
 │   │   ├── buildTransactionBundle.js     — Bundle transaction con urn:uuid
 │   │   └── fhirClient.js                 — Cliente HTTP hacia el servidor FHIR
 │   │
@@ -112,11 +112,11 @@ En cualquier momento se puede reiniciar la consulta con el botón ↺.
 
 | Recurso       | Código SNOMED CT                         | Código LOINC | Descripción                                 |
 | ------------- | ---------------------------------------- | ------------ | ------------------------------------------- |
-| `Observation` | 450321004 — Finnish diabetes risk score  | 97064-0      | Puntaje total FINDRISC                      |
+| `Observation` | 763117005 — Finnish diabetes risk score  | 97064-0      | Puntaje total FINDRISC                      |
 | `Observation` | 60621009 — Body mass index               | 39156-5      | Índice de Masa Corporal (IMC)               |
-| `Observation` | 276361009 — Waist circumference          | 56115-9      | Perímetro abdominal                         |
+| `Observation` | 276361009 — Waist circumference          | 8280-0       | Perímetro abdominal                         |
 | `Observation` | 450759008 — Framingham risk score        | 65853-4      | Riesgo cardiovascular Framingham            |
-| `Composition` | —                                        | 83539-7      | Documento clínico de evaluación             |
+| `Composition` | —                                        | 75492-9      | Documento clínico de evaluación             |
 | `Patient`     | —                                        | —            | Paciente (sin ID local, el servidor asigna) |
 | `Device`      | 706689003 — Application program software | —            | Dispositivo autor                           |
 
@@ -128,7 +128,7 @@ La interpretación clínica de cada `Observation` también utiliza SNOMED CT:
 | IMC         | Normal                      | 43664005 — Normal body weight  |
 | IMC         | Sobrepeso                   | 238131007 — Overweight         |
 | IMC         | Obesidad (IMC 30–39.9)      | 162864005 — Obesity            |
-| IMC         | Obesidad mórbida (IMC ≥ 40) | 238136002 — Morbid obesity     |
+| IMC         | Obesidad mórbida (IMC ≥ 40) | 408512008 — Morbid obesity     |
 | Waist       | Sitio anatómico             | 62413002 — Abdominal structure |
 
 ### Bundle transaction

@@ -31,7 +31,7 @@ const IMC_SNOMED_MAP = {
     display: "Body mass index 30+ - obesity (finding)",
   },
   "Obesidad mórbida": {
-    code: "238136002",
+    code: "408512008",
     display: "Morbid obesity (disorder)",
   },
 };

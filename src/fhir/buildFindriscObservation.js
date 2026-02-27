@@ -12,7 +12,7 @@ const CODE_LOINC = {
 
 const METHOD_SNOMED = {
   system: "http://snomed.info/sct",
-  code: "450321004",
+  code: "763117005",
   display: "Finnish diabetes risk score",
 };
 

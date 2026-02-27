@@ -6,8 +6,8 @@ const CATEGORY_LOINC = {
 
 const TYPE_LOINC = {
   system: "http://loinc.org",
-  code: "83539-7",
-  display: "Cardiology Risk assessment and screening note",
+  code: "75492-9",
+  display: "Risk assessment and screening note",
 };
 
 const FHIR_PROFILE = "http://hl7.org/fhir/StructureDefinition/Composition";

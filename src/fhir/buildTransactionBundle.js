@@ -3,7 +3,7 @@ import { buildComposition } from "./buildComposition";
 const LOINC_IMC = "39156-5";
 const LOINC_FINDRISC = "97064-0";
 const LOINC_FRAMINGHAM = "65853-4";
-const LOINC_WAIST = "56115-9";
+const LOINC_WAIST = "8280-0";
 
 const LOINC_BASE = new Set([LOINC_IMC, LOINC_WAIST]);
 

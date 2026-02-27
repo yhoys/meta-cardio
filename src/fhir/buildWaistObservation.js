@@ -6,7 +6,7 @@ const CATEGORY = {
 
 const CODE_LOINC = {
   system: "http://loinc.org",
-  code: "56115-9",
+  code: "8280-0",
   display: "Waist circumference",
 };
 
@@ -18,8 +18,8 @@ const CODE_SNOMED = {
 
 const BODY_SITE_SNOMED = {
   system: "http://snomed.info/sct",
-  code: "62413002",
-  display: "Abdominal structure (body structure)",
+  code: "302553009",
+  display: "Entire abdomen (body structure)",
 };
 
 const UCUM_CM = {
