@@ -47,6 +47,9 @@ export function consultaReducer(state, action) {
         sendResult: null,
       };
 
+    case "SET_IMC_GLOBAL":
+      return { ...state, imcGlobal: action.payload };
+
     case "SET_OBSERVATION":
       return {
         ...state,
