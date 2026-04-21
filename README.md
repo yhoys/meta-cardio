@@ -2,7 +2,7 @@
 
 > Evaluación de riesgo cardiovascular y metabólico basada en FHIR R4
 
-Prototipo académico desarrollado en el marco del **FHIR Camp 2026 — HL7 Colombia**, que demuestra interoperabilidad estructurada mediante la construcción y envío de recursos FHIR R4 a un servidor real.
+Prototipo académico desarrollado en el marco del **FHIR Camp 2026 - HL7 Colombia**, que demuestra interoperabilidad estructurada mediante la construcción y envío de recursos FHIR R4 a un servidor real.
 
 ---
 
@@ -10,8 +10,8 @@ Prototipo académico desarrollado en el marco del **FHIR Camp 2026 — HL7 Colom
 
 MetaCardio es una aplicación web que permite calcular el riesgo cardiovascular y metabólico de un paciente aplicando dos escalas clínicas validadas:
 
-- **FINDRISC** — riesgo de desarrollar diabetes tipo 2 en 10 años (Lindström & Tuomilehto, 2003)
-- **Framingham (ajustado Colombia)** — riesgo cardiovascular a 10 años con factor de corrección 0.75 para población colombiana (D'Agostino, 2008)
+- **FINDRISC** - riesgo de desarrollar diabetes tipo 2 en 10 años (Lindström & Tuomilehto, 2003)
+- **Framingham (ajustado Colombia)** - riesgo cardiovascular a 10 años con factor de corrección 0.75 para población colombiana (D'Agostino, 2008)
 
 Los resultados se codifican como recursos **FHIR R4** (`Observation`, `Composition`) y se envían a un servidor FHIR mediante un **Bundle de tipo transaction**, garantizando atomicidad en la persistencia de todos los recursos.
 
@@ -42,29 +42,29 @@ META-CARDIO/
 ├── public/
 ├── src/
 │   ├── components/          # Capa de presentación
-│   │   ├── FindriscForm.jsx       — Formulario y cálculo FINDRISC, IMC y perímetro
-│   │   ├── FraminghamForm.jsx     — Formulario y cálculo Framingham
-│   │   ├── ModeSelector.jsx       — Pantalla de inicio
-│   │   └── PatientSelector.jsx    — Selector de paciente
+│   │   ├── FindriscForm.jsx       - Formulario y cálculo FINDRISC, IMC y perímetro
+│   │   ├── FraminghamForm.jsx     - Formulario y cálculo Framingham
+│   │   ├── ModeSelector.jsx       - Pantalla de inicio
+│   │   └── PatientSelector.jsx    - Selector de paciente
 │   │
-│   ├── fhir/                # Capa FHIR — construcción de recursos
-│   │   ├── buildFindriscObservation.js   — Observation LOINC 97064-0 · SNOMED 763117005
-│   │   ├── buildIMCObservation.js        — Observation LOINC 39156-5 · SNOMED 60621009
-│   │   ├── buildWaistObservation.js      — Observation LOINC 8280-0 · SNOMED 276361009
-│   │   ├── buildFraminghamObservation.js — Observation LOINC 65853-4 · SNOMED 450759008
-│   │   ├── buildComposition.js           — Composition clínica LOINC 75492-9
-│   │   ├── buildTransactionBundle.js     — Bundle transaction con urn:uuid
-│   │   └── fhirClient.js                 — Cliente HTTP hacia el servidor FHIR
+│   ├── fhir/                # Capa FHIR - construcción de recursos
+│   │   ├── buildFindriscObservation.js   - Observation LOINC 97064-0 · SNOMED 763117005
+│   │   ├── buildIMCObservation.js        - Observation LOINC 39156-5 · SNOMED 60621009
+│   │   ├── buildWaistObservation.js      - Observation LOINC 8280-0 · SNOMED 276361009
+│   │   ├── buildFraminghamObservation.js - Observation LOINC 65853-4 · SNOMED 450759008
+│   │   ├── buildComposition.js           - Composition clínica LOINC 75492-9
+│   │   ├── buildTransactionBundle.js     - Bundle transaction con urn:uuid
+│   │   └── fhirClient.js                 - Cliente HTTP hacia el servidor FHIR
 │   │
 │   ├── hooks/
-│   │   └── useConsultaFHIR.js     — Lógica de negocio, handlers y orquestación
+│   │   └── useConsultaFHIR.js     - Lógica de negocio, handlers y orquestación
 │   │
 │   ├── reducers/
-│   │   └── consultaReducer.js     — Estado centralizado de la consulta
+│   │   └── consultaReducer.js     - Estado centralizado de la consulta
 │   │
 │   ├── data/
-│   │   ├── patients.json          — Pacientes de prueba
-│   │   └── device.json            — Recurso Device de la aplicación
+│   │   ├── patients.json          - Pacientes de prueba
+│   │   └── device.json            - Recurso Device de la aplicación
 │   │
 │   ├── App.jsx              # Capa de presentación raíz
 │   ├── App.css
@@ -80,7 +80,7 @@ META-CARDIO/
 **Principios de diseño aplicados:**
 
 - Los builders FHIR son funciones puras sin efectos secundarios.
-- `App.jsx` es capa de presentación pura — sin `useState` ni `useEffect` directos.
+- `App.jsx` es capa de presentación pura - sin `useState` ni `useEffect` directos.
 - El estado de la consulta vive íntegramente en `consultaReducer.js`.
 - La lógica de negocio y los handlers están encapsulados en `useConsultaFHIR.js`.
 
@@ -112,24 +112,24 @@ En cualquier momento se puede reiniciar la consulta con el botón ↺.
 
 | Recurso       | Código SNOMED CT                         | Código LOINC | Descripción                                 |
 | ------------- | ---------------------------------------- | ------------ | ------------------------------------------- |
-| `Observation` | 763117005 — Finnish diabetes risk score  | 97064-0      | Puntaje total FINDRISC                      |
-| `Observation` | 60621009 — Body mass index               | 39156-5      | Índice de Masa Corporal (IMC)               |
-| `Observation` | 276361009 — Waist circumference          | 8280-0       | Perímetro abdominal                         |
-| `Observation` | 450759008 — Framingham risk score        | 65853-4      | Riesgo cardiovascular Framingham            |
-| `Composition` | —                                        | 75492-9      | Documento clínico de evaluación             |
-| `Patient`     | —                                        | —            | Paciente (sin ID local, el servidor asigna) |
-| `Device`      | 706689003 — Application program software | —            | Dispositivo autor                           |
+| `Observation` | 763117005 - Finnish diabetes risk score  | 97064-0      | Puntaje total FINDRISC                      |
+| `Observation` | 60621009 - Body mass index               | 39156-5      | Índice de Masa Corporal (IMC)               |
+| `Observation` | 276361009 - Waist circumference          | 8280-0       | Perímetro abdominal                         |
+| `Observation` | 450759008 - Framingham risk score        | 65853-4      | Riesgo cardiovascular Framingham            |
+| `Composition` | -                                        | 75492-9      | Documento clínico de evaluación             |
+| `Patient`     | -                                        | -            | Paciente (sin ID local, el servidor asigna) |
+| `Device`      | 706689003 - Application program software | -            | Dispositivo autor                           |
 
 La interpretación clínica de cada `Observation` también utiliza SNOMED CT:
 
 | Observación | Interpretación              | Código SNOMED CT               |
 | ----------- | --------------------------- | ------------------------------ |
-| IMC         | Bajo peso                   | 248342006 — Underweight        |
-| IMC         | Normal                      | 43664005 — Normal body weight  |
-| IMC         | Sobrepeso                   | 238131007 — Overweight         |
-| IMC         | Obesidad (IMC 30–39.9)      | 162864005 — Obesity            |
-| IMC         | Obesidad mórbida (IMC ≥ 40) | 408512008 — Morbid obesity     |
-| Waist       | Sitio anatómico             | 62413002 — Abdominal structure |
+| IMC         | Bajo peso                   | 248342006 - Underweight        |
+| IMC         | Normal                      | 43664005 - Normal body weight  |
+| IMC         | Sobrepeso                   | 238131007 - Overweight         |
+| IMC         | Obesidad (IMC 30–39.9)      | 162864005 - Obesity            |
+| IMC         | Obesidad mórbida (IMC ≥ 40) | 408512008 - Morbid obesity     |
+| Waist       | Sitio anatómico             | 62413002 - Abdominal structure |
 
 ### Bundle transaction
 
@@ -145,7 +145,7 @@ urn:uuid:obs-4          →  Observation/XXXXX  (Perímetro)
 urn:uuid:composition-1  →  Composition/XXXXX
 ```
 
-Ningún recurso incluye un `id` generado localmente — el servidor FHIR es quien asigna todos los identificadores finales.
+Ningún recurso incluye un `id` generado localmente - el servidor FHIR es quien asigna todos los identificadores finales.
 
 ---
 
@@ -197,12 +197,12 @@ El proyecto es compatible con Vercel sin configuración adicional. Si se desea u
 
 El proyecto es un **prototipo académico** orientado a demostrar interoperabilidad estructurada con FHIR R4. No incorpora elementos propios de un entorno productivo hospitalario:
 
-- **Autenticación y autorización** — no implementa OAuth 2.0, tokens JWT ni SMART on FHIR con scopes clínicos.
-- **Control de acceso por roles (RBAC)** — no hay gestión de usuarios ni permisos diferenciados.
-- **Consentimiento informado** — no se gestiona el recurso FHIR `Consent`.
-- **Trazabilidad** — no se genera el recurso `Provenance` para auditoría de cambios.
-- **Persistencia propia** — depende exclusivamente del servidor FHIR como capa de persistencia, sin base de datos institucional adicional.
-- **Pacientes de prueba** — los pacientes están definidos en un archivo JSON local, no se consultan desde un servidor real.
+- **Autenticación y autorización** - no implementa OAuth 2.0, tokens JWT ni SMART on FHIR con scopes clínicos.
+- **Control de acceso por roles (RBAC)** - no hay gestión de usuarios ni permisos diferenciados.
+- **Consentimiento informado** - no se gestiona el recurso FHIR `Consent`.
+- **Trazabilidad** - no se genera el recurso `Provenance` para auditoría de cambios.
+- **Persistencia propia** - depende exclusivamente del servidor FHIR como capa de persistencia, sin base de datos institucional adicional.
+- **Pacientes de prueba** - los pacientes están definidos en un archivo JSON local, no se consultan desde un servidor real.
 
 Estos aspectos corresponden a una fase de despliegue hospitalario y están fuera del alcance académico del prototipo.
 
@@ -218,7 +218,7 @@ Estos aspectos corresponden a una fase de despliegue hospitalario y están fuera
 
 ## Créditos
 
-Desarrollado como proyecto académico en el marco del **FHIR Camp 2026 — HL7 Colombia**.
+Desarrollado como proyecto académico en el marco del **FHIR Camp 2026 - HL7 Colombia**.
 
 Servidor FHIR de práctica proporcionado por [HL7 Fundamentals](http://fhirserver.hl7fundamentals.org/fhir).
 
